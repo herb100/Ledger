@@ -1,6 +1,0 @@
-<!--index.wxml-->
-<view data-weui-theme="dark" class="container">
-
-Hello World
-
-</view>
