@@ -1,9 +1,19 @@
 {
 	"pages": [ //pages数组中第一项表示应用启动页，参考：https://uniapp.dcloud.io/collocation/pages
 		{
-			"path": "pages/index/index",
+			"path": "pages/detail/detail",
 			"style": {
-				"navigationBarTitleText": "uni-app"
+				"navigationBarTitleText": ""
+			}
+		}, {
+			"path": "pages/statistical/statistical",
+			"style": {
+				"navigationBarTitleText": ""
+			}
+		}, {
+			"path": "pages/my/my",
+			"style": {
+				"navigationBarTitleText": ""
 			}
 		}
 	],
@@ -12,5 +22,28 @@
 		"navigationBarTitleText": "uni-app",
 		"navigationBarBackgroundColor": "#F8F8F8",
 		"backgroundColor": "#F8F8F8"
+	},
+	"tabBar": {
+		"color":"#b0b0b0",
+		"selectedColor":"#53ba46",
+		"borderStyle":"#ffffff",
+		"backgroundColor":"#ffffff",
+		"height": "100px",
+		"list": [{
+			"pagePath": "pages/detail/detail",
+			"iconPath":"static/img/tarBar/bill.png",
+			"selectedIconPath":"static/img/tarBar/bill-fill.png",
+			"text": "明细"
+		}, {
+			"pagePath": "pages/statistical/statistical",
+			"iconPath":"static/img/tarBar/statistical.png",
+			"selectedIconPath":"static/img/tarBar/statistical-fill.png",
+			"text": "统计"
+		}, {
+			"pagePath": "pages/my/my",
+			"iconPath":"static/img/tarBar/my.png",
+			"selectedIconPath":"static/img/tarBar/my-fill.png",
+			"text": "我的"
+		}]
 	}
 }
