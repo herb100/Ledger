@@ -16,17 +16,17 @@
 				"navigationBarTitleText": ""
 			}
 		}
-	],
+    ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
-		"navigationBarTitleText": "uni-app",
-		"navigationBarBackgroundColor": "#F8F8F8",
-		"backgroundColor": "#F8F8F8"
+		"navigationBarTitleText": "账单小簿",
+		"navigationBarBackgroundColor": "#ffffff",
+		"backgroundColor": "#ffffff"
 	},
 	"tabBar": {
 		"color":"#b0b0b0",
 		"selectedColor":"#53ba46",
-		"borderStyle":"#ffffff",
+		"borderStyle":"white",
 		"backgroundColor":"#ffffff",
 		"height": "100px",
 		"list": [{
