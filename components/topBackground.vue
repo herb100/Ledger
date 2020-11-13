@@ -1,28 +1,36 @@
 <template>
-	<view class="bg-gradual-blue">
-		账单小簿
-		全部类型
-		2020 年 11 月(多选)
-		总支出
-		总收入
+	<view class="top-background">
+		<view class="top-title">
+			<text>记账本</text>
+		</view>
 	</view>
 </template>
 
 <script>
-	import billTypes from '../common/billTypes.js'
-
 	export default {
 		data() {
 			return {
 
-			};
-		},
-		beforeMount: function() {
-			console.log(billTypes)
+			}
 		}
 	}
 </script>
 
-<style>
+<style scoped>
+	.top-background {
+		width: auto;
+		height: 115rpx;
+		background-color: #3eb575;
+		/* box-shadow: -2px 1px 2px 0px #728bc1; */
+		display: flex;
+		justify-content: center;
+		align-items: center;
+	}
 
+	.top-title {
+		display: inline-block;
+		font-size: 32rpx;
+		margin-top: 35rpx;
+		color: #e3f4eb;
+	}
 </style>
