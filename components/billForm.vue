@@ -12,12 +12,19 @@
 					<view class="action text-blue" @tap="hideModal">取消</view>
 				</view>
 				<view class="padding-xl">
-					<view class="bill-type-card" :class="selectedBillTypes.length === 0?'bill-type-selected':'bill-type-no-selected'">全部类型</view>
+					<view class="bill-type-card" @click="selectedAllBill"
+						:class="incomeSelected.length === 0 && spendingSelected.length === 0
+							?'bill-type-selected':'bill-type-no-selected'"
+					>全部类型</view>
 					<view v-for="(item, index) in billTypes" :key="index">
 						<view class="bill-type-value">{{item['value']}}</view>
 						<view class="bill-type-layout">
-							<view v-for="(item1, index1) in billTypes[index]['type']" :key="index1" :id="item1['type']" @click="selectBill">
-								<view class="bill-type-card" :class="selectedBillTypes.indexOf(item1['type']) !== -1?'bill-type-selected':'bill-type-no-selected'">{{item1['value']}}</view>
+							<view v-for="(item1, index1) in billTypes[index]['type']" :key="index1" :data-type="index" :id="item1['type']" @click="selectBill">
+								<view class="bill-type-card" 
+									:class="index === 'income' && incomeSelected.indexOf(item1['type']) !== -1 
+									 || index === 'spending' && spendingSelected.indexOf(item1['type']) !== -1?
+									 'bill-type-selected':'bill-type-no-selected'"
+								>{{item1['value']}}</view>
 							</view>
 						</view>
 					</view>
@@ -42,19 +49,41 @@
 	export default {
 		data() {
 			return {
-				modalName: 'billTypeModal',
+				modalName: '',
 				billTypes: {},
-				selectedBillTypes: []
+				incomeSelected: [],
+				spendingSelected: []
 			};
 		},
-		computed: {
-		},
+		computed: {},
 		beforeMount: function() {
 			this.billTypes = billTypes
 		},
 		methods: {
 			selectBill(e) {
-				console.log(e)
+				let billType = e.currentTarget.dataset.type
+				let key = e.currentTarget.id
+
+				if (billType === 'income') {
+					let index = this.incomeSelected.indexOf(key)
+					if (index === -1) {
+						this.incomeSelected.push(key)
+					} else {
+						this.incomeSelected.splice(index, 1)
+					}
+				} else if (billType === 'spending') {
+					let index = this.spendingSelected.indexOf(key)
+					if (index === -1) {
+						this.spendingSelected.push(key)
+					} else {
+						this.spendingSelected.splice(index, 1)
+					}
+					
+				}
+			},
+			selectedAllBill() {
+				this.spendingSelected = []
+				this.incomeSelected = []
 			},
 			showModal(e) {
 				this.modalName = e.currentTarget.dataset.target
@@ -122,7 +151,7 @@
 		
 		font-size: 32rpx;
 		padding-top: 30rpx;
-		border-radius: 5rpx;
+		border-radius: 2rpx;
 	}
 	
 	.bill-type-selected {
