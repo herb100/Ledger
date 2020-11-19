@@ -1,10 +1,12 @@
 <template>
-	<view class="content">
+	<view class="content" ref="detail_page">
 		<view class="top-background">
 			<top-background></top-background>
 			<bill-form></bill-form>
 		</view>
+		<!-- 添加账单 -->
 		<view class="add-bill" @tap="showModal" data-target="addBillModal"></view>
+		<!-- 添加账单模态框 -->
 		<view class="cu-modal bottom-modal" :class="modalName=='addBillModal'?'show':''">
 			<view class="cu-dialog">
 				<view class="cu-bar bg-white">
@@ -16,14 +18,20 @@
 				</view>
 			</view>
 		</view>
+		<!-- 账单列表 -->
 		<view class="bill-list">
+			<bill-list></bill-list>
+			<bill-list></bill-list>
+			<bill-list></bill-list>
+			<bill-list></bill-list>
+			<bill-list></bill-list>
 			<bill-list></bill-list>
 		</view>
 	</view>
 </template>
 
 <script>
-	import topBackground from '../../components/topBackground.vue'
+	import topBackground from '../../components/common/topBackground.vue'
 	import billForm from '../../components/billForm.vue'
 	import billList from '../../components/billList.vue'
 	import config from '../../config.js'
@@ -38,7 +46,7 @@
 			return {
 				title: 'this is detail page',
 				billInfo: [],
-				modalName: null,
+				modalName: null
 			}
 		},
 		onLoad() {},
@@ -46,7 +54,12 @@
 			let _self = this
 			// this.get_bill(_self)
 		},
+		mounted: function() {
+		},
 		methods: {
+			controlFlag() {
+				this.flag = true
+			},
 			get_bill: function(_self) {
 				uni.request({
 					url: config.baseUrl + '/bill',
@@ -60,10 +73,10 @@
 					fail: function(res) {}
 				})
 			},
-			showModal(e) {
+			showModal: function(e) {
 				this.modalName = e.currentTarget.dataset.target
 			},
-			hideModal(e) {
+			hideModal: function(e) {
 				this.modalName = null
 			}
 		}
@@ -78,10 +91,14 @@
 
 	.top-background {
 		background-color: #3eb575;
+		position: sticky;
+		top: 0;
+		z-index: 100;
 	}
 
 	.content {
 		width: 100%;
+		position: absolute;
 	}
 
 	.bill-list {
@@ -92,15 +109,17 @@
 	.add-bill {
 		width: 85rpx;
 		height: 85rpx;
+		background-color: #FFFFFF;
 		background-image: url(../../static/img/add-bill.png);
 		background-size: 55% 55%;
 		background-position: center;
 		background-repeat: no-repeat;
-		box-shadow: 0 0 16px -2px #6f6f6f;
+		box-shadow: 0 0 26rpx -6rpx #6f6f6f;
 		border-radius: 50%;
-		position: absolute;
-		right: 50rpx;
-		bottom: 120rpx;
+		float: left;
+		position: sticky;
+		top: 78%;
+		left: 82%;
 		z-index: 100;
 	}
 </style>

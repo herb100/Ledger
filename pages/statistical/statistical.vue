@@ -7,7 +7,7 @@
 </template>
 
 <script>
-	import topBackground from '../../components/topBackground.vue'
+	import topBackground from '../../components/common/topBackground.vue'
 	
 	export default {
 		components: {

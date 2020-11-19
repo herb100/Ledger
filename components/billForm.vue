@@ -1,58 +1,71 @@
 <template>
-	<view class="bill-form">
+	<view class="bill-form" @touchmove.stop.prevent>
+		<!-- 类型选择 -->
 		<view class="text-white bill-type" @tap="showModal" data-target="billTypeModal">
 			<span>全部类型</span>
 			<span class="split-line"> | </span>
 			<text class="cuIcon-list more-type"></text>
 		</view>
+		<!-- 类型选择模态框 -->
 		<view class="cu-modal bottom-modal" :class="modalName=='billTypeModal'?'show':''">
 			<view class="cu-dialog">
 				<view class="cu-bar bg-white">
-					<view class="action text-green">确定</view>
 					<view class="action text-blue" @tap="hideModal">取消</view>
+					<view class="action text-green">确定</view>
 				</view>
-				<view class="padding-xl">
-					<view class="bill-type-card" @click="selectedAllBill"
-						:class="incomeSelected.length === 0 && spendingSelected.length === 0
-							?'bill-type-selected':'bill-type-no-selected'"
-					>全部类型</view>
-					<view v-for="(item, index) in billTypes" :key="index">
-						<view class="bill-type-value">{{item['value']}}</view>
-						<view class="bill-type-layout">
-							<view v-for="(item1, index1) in billTypes[index]['type']" :key="index1" :data-type="index" :id="item1['type']" @click="selectBill">
-								<view class="bill-type-card" 
-									:class="index === 'income' && incomeSelected.indexOf(item1['type']) !== -1 
-									 || index === 'spending' && spendingSelected.indexOf(item1['type']) !== -1?
-									 'bill-type-selected':'bill-type-no-selected'"
-								>{{item1['value']}}</view>
+				<view class="padding-xl bill-type-modal-body">
+					<scroll-view scroll-y="true" class="scroll-Y bill-type-modal-scroll">
+						<view class="bill-type-card" @click="selectedAllBill"
+							:class="incomeSelected.length === 0 && spendingSelected.length === 0
+								?'bill-type-selected':'bill-type-no-selected'"
+						>全部类型</view>
+						<view v-for="(item, index) in billTypes" :key="index">
+							<view class="bill-type-value">{{item['value']}}</view>
+							<view class="bill-type-layout">
+								<view v-for="(item1, index1) in billTypes[index]['type']" :key="index1" :data-type="index" :id="item1['type']" @click="selectBill">
+									<view class="bill-type-card" 
+										:class="index === 'income' && incomeSelected.indexOf(item1['type']) !== -1 
+										 || index === 'spending' && spendingSelected.indexOf(item1['type']) !== -1?
+										 'bill-type-selected':'bill-type-no-selected'"
+									>{{item1['value']}}</view>
+								</view>
 							</view>
 						</view>
-					</view>
+					</scroll-view>
 				</view> 
 			</view>
 		</view>
+
+		<!-- 时间选择 账单统计 -->
 		<view class="text-white bill-total">
-			<text> 2020年11月<span class="more-date">▼</span></text>
+			<view style="display: inline-block;">
+				<date-time-picker></date-time-picker>
+			</view>
 			<span class="bill-spending">
 				总支出 <text class="text-price">546</text>
 			</span>
 			<span class="bill-income">
 				总收入<text class="text-price">546</text>
 			</span>
-		</view>
+		</view>	
 	</view>
 </template>
 
 <script>
 	import billTypes from '../common/billTypes.js'
+	import dateTimePicker from './basic/dateTimePicker.vue'
 
 	export default {
+		components: {
+			dateTimePicker
+		},
 		data() {
 			return {
 				modalName: '',
 				billTypes: {},
 				incomeSelected: [],
-				spendingSelected: []
+				spendingSelected: [],
+				curDate: '2020-11-19'
 			};
 		},
 		computed: {},
@@ -60,7 +73,7 @@
 			this.billTypes = billTypes
 		},
 		methods: {
-			selectBill(e) {
+			selectBill: function(e) {
 				let billType = e.currentTarget.dataset.type
 				let key = e.currentTarget.id
 
@@ -81,14 +94,14 @@
 					
 				}
 			},
-			selectedAllBill() {
+			selectedAllBill: function() {
 				this.spendingSelected = []
 				this.incomeSelected = []
 			},
-			showModal(e) {
+			showModal: function(e) {
 				this.modalName = e.currentTarget.dataset.target
 			},
-			hideModal(e) {
+			hideModal: function(e) {
 				this.modalName = null
 			}
 		}
@@ -104,11 +117,6 @@
 
 	.more-type {
 		font-size: 30rpx;
-	}
-
-	.more-date {
-		font-size: 1rpx;
-		color: #9dd9b8;
 	}
 
 	.split-line {
@@ -178,5 +186,12 @@
 
 	.cu-modal.bottom-modal .cu-dialog {
 		border-radius: 20rpx;
+	}
+	
+	.bill-type-modal-body {
+		height: 650rpx;
+	}
+	.bill-type-modal-scroll {
+		height: 500rpx;
 	}
 </style>

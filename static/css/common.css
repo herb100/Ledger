@@ -2,3 +2,7 @@ page {
 	background-color: #FFFFFF;
 	display: flex;
 }
+
+.bill-type-modal-body {
+	background-color: #FFFFFF;
+}
