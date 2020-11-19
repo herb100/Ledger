@@ -20,4 +20,5 @@
 	@import url("static/css/colorui-main.css");
 	@import url("static/css/colorui-icon.css");
 	@import url("static/css/common.css");
+	@import url("static/css/iconfont.css");
 </style>
