@@ -32,8 +32,8 @@
 
 <script>
 	import topBackground from '../../components/common/topBackground.vue'
-	import billForm from '../../components/billForm.vue'
-	import billList from '../../components/billList.vue'
+	import billForm from '../../components/detailModule/billForm.vue'
+	import billList from '../../components/detailModule/billList.vue'
 	import config from '../../config.js'
 
 	export default {

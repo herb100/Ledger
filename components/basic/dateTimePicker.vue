@@ -1,7 +1,7 @@
 <template>
 	<view class="date-time-picker">
 		<view class="uni-padding-wrap">
-			<view class="picker date-show" @tap="showModal" data-target="dateTimePickerModal">
+			<view class="picker" @tap="showModal" data-target="dateTimePickerModal">
 				{{year}}年
 				<text>{{month}}月</text>
 				<!-- <text>{{day}}日</text> -->
@@ -55,7 +55,7 @@
 	            value: [],
 	            visible: false,
 	            indicatorStyle: `height: ${Math.round(uni.getSystemInfoSync().screenWidth/(750/100))}px;`,
-				modalName: 'dateTimePickerModal'
+				modalName: ''
 	        }
 	    },
 		created: function () {
@@ -98,10 +98,6 @@
 </script>
 
 <style scoped>
-	/* .date-show {
-		color: #FFFFFF;
-	} */
-	
 	.more-date {
 		font-size: 1rpx;
 		color: #9dd9b8;

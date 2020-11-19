@@ -52,8 +52,8 @@
 </template>
 
 <script>
-	import billTypes from '../common/billTypes.js'
-	import dateTimePicker from './basic/dateTimePicker.vue'
+	import billTypes from '../../common/billTypes.js'
+	import dateTimePicker from '../basic/dateTimePicker.vue'
 
 	export default {
 		components: {
