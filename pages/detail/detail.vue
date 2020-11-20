@@ -14,6 +14,9 @@
 			<bill-list></bill-list>
 			<bill-list></bill-list>
 		</view>
+		<view class="load-more">
+			<text class="text-gray">上滑加载更多~</text>
+		</view>
 	</view>
 </template>
 
@@ -64,7 +67,7 @@
 
 <style scoped>
 	page {
-		background-color: #ffffff;
+		background-color: #ededed;
 		font-family: 微软雅黑;
 	}
 
@@ -83,5 +86,13 @@
 	.bill-list {
 		width: 95%;
 		margin: 0 2.5%;
+	}
+	
+	.load-more {
+		text-align: center;
+		width: auto;
+		margin-bottom: 150rpx;
+		line-height: 70rpx;
+		height: 80rpx;
 	}
 </style>

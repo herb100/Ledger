@@ -53,6 +53,7 @@
 		box-shadow: 0 0 11rpx -2rpx #888a8c;
 		margin-top: 15rpx;
 		border-radius: 13rpx;
+		background-color: #FFFFFF;
 	}
 
 	.bill-title {

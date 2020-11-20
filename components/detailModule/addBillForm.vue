@@ -82,6 +82,6 @@
 		position: fixed;
 		top: 78%;
 		left: 82%;
-		z-index: 100;
+		z-index: 2;
 	}
 </style>
