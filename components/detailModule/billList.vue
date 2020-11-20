@@ -54,12 +54,14 @@
 		margin-top: 15rpx;
 		border-radius: 13rpx;
 	}
+
 	.bill-title {
 		display: flex;
 		flex-direction: row;
 		justify-content: space-between;
 		align-items: baseline;
 	}
+
 	.bill-time {
 		padding: 20rpx 6rpx 47rpx;
 		margin-left: 30rpx;
@@ -67,33 +69,41 @@
 		font-size: 28rpx;
 		font-weight: 500;
 	}
+
 	.cu-tag {
 		padding: 0px 6rpx;
 		height: 15px;
 	}
+
 	.tag-split {
 		padding: 15rpx;
 	}
+
 	.bill-icon {
 		color: #989898;
 		margin-right: 4rpx;
 	}
+
 	.bill-detail {
 		display: flex;
 		align-items: baseline;
 		margin-right: 5rpx;
 		font-size: 17rpx;
 	}
+
 	.cu-list.menu-avatar>.cu-item>.cu-avatar {
 		width: 75rpx;
 		height: 75rpx;
 	}
+
 	.cu-list.menu-avatar>.cu-item .content>uni-view:first-child {
-	    font-size: 14px;
+		font-size: 14px;
 	}
+
 	.cu-list.menu-avatar>.cu-item .content {
-	    line-height: 1.5em;
+		line-height: 1.5em;
 	}
+
 	.bill-detail-money {
 		margin-bottom: 17rpx;
 	}

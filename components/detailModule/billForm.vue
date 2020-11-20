@@ -10,29 +10,26 @@
 		<view class="cu-modal bottom-modal" :class="modalName=='billTypeModal'?'show':''">
 			<view class="cu-dialog">
 				<view class="cu-bar bg-white">
-					<view class="action text-blue" @tap="hideModal">取消</view>
 					<view class="action text-green">确定</view>
+					<view class="action text-blue" @tap="hideModal">取消</view>
 				</view>
 				<view class="padding-xl bill-type-modal-body">
 					<scroll-view scroll-y="true" class="scroll-Y bill-type-modal-scroll">
-						<view class="bill-type-card" @click="selectedAllBill"
-							:class="incomeSelected.length === 0 && spendingSelected.length === 0
-								?'bill-type-selected':'bill-type-no-selected'"
-						>全部类型</view>
+						<view class="bill-type-card" @click="selectedAllBill" :class="incomeSelected.length === 0 && spendingSelected.length === 0
+								?'bill-type-selected':'bill-type-no-selected'">全部类型</view>
 						<view v-for="(item, index) in billTypes" :key="index">
 							<view class="bill-type-value">{{item['value']}}</view>
 							<view class="bill-type-layout">
-								<view v-for="(item1, index1) in billTypes[index]['type']" :key="index1" :data-type="index" :id="item1['type']" @click="selectBill">
-									<view class="bill-type-card" 
-										:class="index === 'income' && incomeSelected.indexOf(item1['type']) !== -1 
+								<view v-for="(item1, index1) in billTypes[index]['type']" :key="index1" :data-type="index" :id="item1['type']"
+								 @click="selectBill">
+									<view class="bill-type-card" :class="index === 'income' && incomeSelected.indexOf(item1['type']) !== -1 
 										 || index === 'spending' && spendingSelected.indexOf(item1['type']) !== -1?
-										 'bill-type-selected':'bill-type-no-selected'"
-									>{{item1['value']}}</view>
+										 'bill-type-selected':'bill-type-no-selected'">{{item1['value']}}</view>
 								</view>
 							</view>
 						</view>
 					</scroll-view>
-				</view> 
+				</view>
 			</view>
 		</view>
 
@@ -47,7 +44,7 @@
 			<span class="bill-income">
 				总收入<text class="text-price">546</text>
 			</span>
-		</view>	
+		</view>
 	</view>
 </template>
 
@@ -91,7 +88,7 @@
 					} else {
 						this.spendingSelected.splice(index, 1)
 					}
-					
+
 				}
 			},
 			selectedAllBill: function() {
@@ -154,31 +151,31 @@
 	.bill-type-card {
 		width: 215rpx;
 		height: 105rpx;
-		
+
 		text-align: center;
-		
+
 		font-size: 32rpx;
 		padding-top: 30rpx;
 		border-radius: 2rpx;
 	}
-	
+
 	.bill-type-selected {
 		background-color: #3eb575;
 		color: #FFFFFF;
 	}
-	
+
 	.bill-type-no-selected {
 		background-color: #FFFFFF;
 		color: black;
 	}
-	
+
 	.bill-type-value {
 		text-align: left;
 		color: #848484;
 		font-size: 25rpx;
 		padding-top: 32rpx;
 	}
-	
+
 	.bill-type-layout {
 		display: flex;
 		flex-wrap: wrap;
@@ -187,10 +184,11 @@
 	.cu-modal.bottom-modal .cu-dialog {
 		border-radius: 20rpx;
 	}
-	
+
 	.bill-type-modal-body {
 		height: 650rpx;
 	}
+
 	.bill-type-modal-scroll {
 		height: 500rpx;
 	}

@@ -78,7 +78,8 @@ const billTypes = {
 			{
 				'type': 'kinship_card',
 				'value': '亲属卡'
-			}]
+			}
+		]
 	},
 	'income': {
 		'value': '收入',
@@ -117,7 +118,8 @@ const billTypes = {
 			{
 				'type': 'business_transfer',
 				'value': '商家转账'
-			}]
+			}
+		]
 	}
 }
 
