@@ -35,6 +35,7 @@
 	.ticket {
 		position: relative;
 	}
+
 	.ticket-outlet {
 		border-radius: 10rpx;
 		height: 20rpx;
@@ -54,16 +55,17 @@
 		width: calc(100% - 20rpx);
 		margin-left: 10rpx;
 		box-shadow: 0rpx 4rpx 10rpx -4rpx #777777;
+		-webkit-box-shadow: 0rpx 4rpx 10rpx -7rpx #777777;
 		position: relative;
 	}
-	
+
 	.sawtooth {
 		width: calc(100% - 20rpx);
 		height: 10rpx;
 		margin-left: 10rpx;
 		position: relative;
 	}
-	
+
 	.sawtooth::before {
 		display: block;
 		content: "";
@@ -78,18 +80,19 @@
 		box-shadow: 0 0 0 0 #007AFF;
 		background-image: var(--sawtoothShadow);
 	}
-	
+
 	.sawtooth-shadow {
 		width: calc(100% - 20rpx);
-		height: 8rpx;
+		height: 10rpx;
 		margin-left: 10rpx;
 		position: relative;
 	}
+
 	.sawtooth-shadow::after {
 		display: block;
 		content: "";
 		position: absolute;
-		top: -720%;
+		top: -550%;
 		bottom: 0;
 		left: 50%;
 		right: 0;
@@ -97,18 +100,18 @@
 		margin-top: 20px;
 		background-size: 10px 20px;
 		box-shadow: 0 0 0 0 #007AFF;
-		background-image: linear-gradient(-45deg,transparent 70%,#a5a5a5 50%), linear-gradient(45deg,transparent 70%,#a5a5a5 50%);
+		background-image: linear-gradient(-45deg, transparent 70%, #a5a5a5 50%), linear-gradient(45deg, transparent 70%, #a5a5a5 50%);
 		transform: translate(0%, 90%) rotate(2deg);
 		transform-origin: center center;
 		opacity: 0.8;
 		z-index: -1
 	}
-	
+
 	.sawtooth-shadow::before {
 		display: block;
 		content: "";
 		position: absolute;
-		top: -720%;
+		top: -550%;
 		bottom: 0;
 		left: 0%;
 		right: 50%;
@@ -116,7 +119,7 @@
 		margin-top: 20px;
 		background-size: 10px 20px;
 		box-shadow: 0 0 0 0 #007AFF;
-		background-image: linear-gradient(-45deg,transparent 70%,#a5a5a5 50%), linear-gradient(45deg,transparent 70%,#a5a5a5 50%);
+		background-image: linear-gradient(-45deg, transparent 70%, #a5a5a5 50%), linear-gradient(45deg, transparent 70%, #a5a5a5 50%);
 		transform: translate(0%, 90%) rotate(-2deg);
 		transform-origin: center center;
 		opacity: 0.8;
