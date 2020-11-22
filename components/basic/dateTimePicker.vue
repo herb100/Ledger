@@ -5,6 +5,7 @@
 				{{year}}年
 				<text>{{month}}月</text>
 				<!-- <text>{{day}}日</text> -->
+				<!-- <slot name="datetimeIcon"></slot> -->
 				<span class="more-date">▼</span>
 			</view>
 		</view>
@@ -101,7 +102,7 @@
 		font-size: 1rpx;
 		color: #9dd9b8;
 	}
-
+	
 	.bill-type-modal-body {
 		height: 550rpx;
 		color: #000000;

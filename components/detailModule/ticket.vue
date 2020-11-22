@@ -1,31 +1,90 @@
 <template>
 	<view>
-		<view class="ticket-outlet" :style="{backgroundColor: outletColor}"></view>
-		<view class="ticket-outlet-shadow" :style="{backgroundColor: ticketColor}"></view>
-		<view class="ticket-content" :style="{backgroundColor: ticketColor}">
-			<slot name="content"></slot>
+		<view class="ticket-outlet"></view>
+		<view class="ticket-outlet-shadow" :style="{backgroundColor: '#FFFFFF'}"></view>
+		<view @touchmove="ticketTouchMove" @touchstart="ticketTouchStart" @touchend="ticketTouchEnd">
+			<view class="ticket-content" id="ticketContent" :style="{backgroundColor: '#FFFFFF', height: ticketContentHeight==='auto'?'auto':ticketContentHeight+'rpx'}">
+				<view :style="{height: addBillFormHeight}">
+					<slot name="billForm"></slot>
+				</view>
+			</view>
+			<slot name="billDetail"></slot>
+			<view class="sawtooth" :style="{backgroundColor: '#FFFFFF'}"></view>
+			<view class="sawtooth-shadow" :style="{backgroundColor: '#FFFFFF'}"></view>
 		</view>
-		<view class="sawtooth" :style="{backgroundColor: ticketColor, '--sawtoothShadow': sawtoothShadow}"></view>
-		<view class="sawtooth-shadow" :style="{backgroundColor: ticketColor}"></view>
 	</view>
 </template>
 
 <script>
 	export default {
 		props: {
-			outletColor: {
-				type: String,
-				default: '#006690'
+			// addBillFormHeight + addBillFormMoreHeight 用于判断滑动是否达到指定距离
+			// 表单的高度
+			addBillFormHeight: {
+				type: Number,
+				default: 200
 			},
-			ticketColor: {
-				type: String,
-				default: '#FFFFFF'
+			// 用于下拉后回弹的距离
+			addBillFormMoreHeight: {
+				type: Number,
+				default: 50
+			},
+			testMode: {
+				type: Boolean,
+				default: false
 			}
 		},
 		data() {
 			return {
-				sawtoothShadow: `linear-gradient(-45deg,transparent 70%,${this.ticketColor} 50%), 
-					linear-gradient(45deg,transparent 70%,${this.ticketColor} 50%)`,
+				touchStartPageY: 0,
+				touchMovePageY: 0,
+				// ticket 内容高度
+				ticketContentHeight: 0,
+				// 滑动的距离
+				slideDistance: 0,
+				// 计算 rpx/px 比例
+				proportion: 0,
+			}
+		},
+		beforeMount: function() {
+			let _self = this
+
+			uni.getSystemInfo({
+				success: function(res) {
+					_self.proportion = 750 / res.screenWidth
+				}
+			})
+
+			if (this.testMode) {
+				this.ticketContentHeight = 'auto'
+			}
+		},
+		methods: {
+			ticketTouchStart: function(e) {
+				this.touchStartPageY = e.touches[0].pageY
+			},
+			ticketTouchMove: function(e) {
+				this.touchMovePageY = e.touches[0].pageY
+				this.slideDistance = (this.touchMovePageY - this.touchStartPageY) * this.proportion
+
+				if (this.testMode) {
+					return
+				}
+				// 滑动是否达到指定距离
+				if (this.slideDistance <= this.addBillFormHeight + this.addBillFormMoreHeight) {
+					this.ticketContentHeight = this.touchStartPageY + this.slideDistance
+				}
+			},
+			ticketTouchEnd: function(e) {
+				if (this.testMode) {
+					return
+				}
+				// 滑动是否达到指定距离
+				if (this.slideDistance <= this.addBillFormHeight + this.addBillFormMoreHeight) {
+					this.ticketContentHeight = 0
+				} else {
+					this.ticketContentHeight = 'auto'
+				}
 			}
 		}
 	}
@@ -40,6 +99,7 @@
 		border-radius: 10rpx;
 		height: 20rpx;
 		width: 100%;
+		background-color: #006690;
 	}
 
 	.ticket-outlet-shadow {
@@ -51,12 +111,10 @@
 	}
 
 	.ticket-content {
-		height: 150rpx;
 		width: calc(100% - 20rpx);
 		margin-left: 10rpx;
-		box-shadow: 0rpx 4rpx 10rpx -4rpx #777777;
-		-webkit-box-shadow: 0rpx 4rpx 10rpx -7rpx #777777;
 		position: relative;
+		overflow: hidden;
 	}
 
 	.sawtooth {
@@ -78,7 +136,7 @@
 		margin-top: 20px;
 		background-size: 10px 20px;
 		box-shadow: 0 0 0 0 #007AFF;
-		background-image: var(--sawtoothShadow);
+		background-image: linear-gradient(-45deg, transparent 70%, #FFFFFF 50%), linear-gradient(45deg, transparent 70%, #FFFFFF 50%);
 	}
 
 	.sawtooth-shadow {

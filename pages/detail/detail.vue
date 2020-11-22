@@ -1,11 +1,26 @@
 <template>
 	<view class="content" ref="detail_page">
-		<view class="top-background">
+		<ticket>
+			<template v-slot:billForm>
+				<view style="padding: 20rpx;">
+					<add-bill-form></add-bill-form>
+				</view>
+			</template>
+			<template v-slot:billDetail>
+				<view style="padding: 20rpx;">
+					<view> 123 元 jkjkj</view>
+					<view> 123 元 jkjkj</view>
+					<view> 123 元 jkjkj</view>
+					<view> 123 元 jkjkj</view>
+					<view> 123 元 jkjkj</view>
+				</view>
+			</template>
+		</ticket>
+		<!-- <view class="top-background">
 			<top-background></top-background>
 			<bill-form></bill-form>
 		</view>
 		<add-bill-form></add-bill-form>
-		<!-- 账单列表 -->
 		<view class="bill-list">
 			<bill-list></bill-list>
 			<bill-list></bill-list>
@@ -16,7 +31,7 @@
 		</view>
 		<view class="load-more">
 			<text class="text-gray">上滑加载更多~</text>
-		</view>
+		</view> -->
 	</view>
 </template>
 
@@ -25,6 +40,7 @@
 	import billForm from '../../components/detailModule/billForm.vue'
 	import billList from '../../components/detailModule/billList.vue'
 	import addBillForm from '../../components/detailModule/addBillForm.vue'
+	import ticket from '../../components/detailModule/ticket.vue'
 	import config from '../../config.js'
 
 	export default {
@@ -32,6 +48,7 @@
 			topBackground,
 			billForm,
 			billList,
+			ticket,
 			addBillForm
 		},
 		data() {
