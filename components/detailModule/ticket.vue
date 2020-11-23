@@ -1,16 +1,16 @@
 <template>
 	<view>
 		<view class="ticket-outlet"></view>
-		<view class="ticket-outlet-shadow" :style="{backgroundColor: '#FFFFFF'}"></view>
+		<view class="ticket-outlet-shadow" ></view>
 		<view @touchmove="ticketTouchMove" @touchstart="ticketTouchStart" @touchend="ticketTouchEnd">
-			<view class="ticket-content" id="ticketContent" :style="{backgroundColor: '#FFFFFF', height: ticketContentHeight==='auto'?'auto':ticketContentHeight+'rpx'}">
+			<view class="ticket-content" :style="{height: ticketContentHeight==='auto'?'auto':ticketContentHeight+'rpx'}">
 				<view :style="{height: addBillFormHeight}">
 					<slot name="billForm"></slot>
 				</view>
 			</view>
 			<slot name="billDetail"></slot>
-			<view class="sawtooth" :style="{backgroundColor: '#FFFFFF'}"></view>
-			<view class="sawtooth-shadow" :style="{backgroundColor: '#FFFFFF'}"></view>
+			<view class="sawtooth"></view>
+			<view class="sawtooth-shadow"></view>
 		</view>
 	</view>
 </template>
@@ -44,6 +44,8 @@
 				slideDistance: 0,
 				// 计算 rpx/px 比例
 				proportion: 0,
+				launchTouch: true,
+				screenHeight: 0
 			}
 		},
 		beforeMount: function() {
@@ -51,6 +53,7 @@
 
 			uni.getSystemInfo({
 				success: function(res) {
+					_self.screenHeight = res.windowHeight
 					_self.proportion = 750 / res.screenWidth
 				}
 			})
@@ -62,28 +65,38 @@
 		methods: {
 			ticketTouchStart: function(e) {
 				this.touchStartPageY = e.touches[0].pageY
+				if (!this.launchTouch) return
 			},
 			ticketTouchMove: function(e) {
+				if (!this.launchTouch) return
+
+				// 向上滑动时不出现
+				if (this.touchStartPageY > e.touches[0].pageY) return
 				this.touchMovePageY = e.touches[0].pageY
 				this.slideDistance = (this.touchMovePageY - this.touchStartPageY) * this.proportion
 
-				if (this.testMode) {
-					return
-				}
 				// 滑动是否达到指定距离
 				if (this.slideDistance <= this.addBillFormHeight + this.addBillFormMoreHeight) {
 					this.ticketContentHeight = this.touchStartPageY + this.slideDistance
 				}
 			},
 			ticketTouchEnd: function(e) {
-				if (this.testMode) {
-					return
-				}
+				if (!this.launchTouch) return
+
 				// 滑动是否达到指定距离
 				if (this.slideDistance <= this.addBillFormHeight + this.addBillFormMoreHeight) {
 					this.ticketContentHeight = 0
 				} else {
 					this.ticketContentHeight = 'auto'
+				}
+			},
+			initTouch: function() {
+				if (this.testMode) {
+					this.launchTouch = false
+				}
+				// 点击位置不超过一屏高度才能下拉
+				if (this.touchStartPageY > this.screenHeight) {
+					this.launchTouch = false
 				}
 			}
 		}
@@ -108,6 +121,7 @@
 		width: calc(100% - 20rpx);
 		margin-top: -10rpx;
 		margin-left: 10rpx;
+		background-color: #FFFFFF;
 	}
 
 	.ticket-content {
@@ -115,6 +129,7 @@
 		margin-left: 10rpx;
 		position: relative;
 		overflow: hidden;
+		background-color: #FFFFFF;
 	}
 
 	.sawtooth {
@@ -122,6 +137,7 @@
 		height: 10rpx;
 		margin-left: 10rpx;
 		position: relative;
+		background-color: #FFFFFF;
 	}
 
 	.sawtooth::before {
@@ -144,6 +160,7 @@
 		height: 10rpx;
 		margin-left: 10rpx;
 		position: relative;
+		background-color: #FFFFFF;
 	}
 
 	.sawtooth-shadow::after {

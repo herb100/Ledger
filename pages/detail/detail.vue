@@ -2,17 +2,16 @@
 	<view class="content" ref="detail_page">
 		<ticket>
 			<template v-slot:billForm>
-				<view style="padding: 20rpx;">
+				<view class="ticket-content">
 					<add-bill-form></add-bill-form>
 				</view>
 			</template>
 			<template v-slot:billDetail>
-				<view style="padding: 20rpx;">
-					<view> 123 元 jkjkj</view>
-					<view> 123 元 jkjkj</view>
-					<view> 123 元 jkjkj</view>
-					<view> 123 元 jkjkj</view>
-					<view> 123 元 jkjkj</view>
+				<view class="ticket-content">
+					<bill-list></bill-list>
+					<bill-list></bill-list>
+					<bill-list></bill-list>
+					<bill-list></bill-list>
 				</view>
 			</template>
 		</ticket>
@@ -87,7 +86,11 @@
 		background-color: #ededed;
 		font-family: 微软雅黑;
 	}
-
+	
+	.ticket-content {
+		padding: 20rpx;
+	}
+	
 	.top-background {
 		background-color: #3eb575;
 		position: sticky;
