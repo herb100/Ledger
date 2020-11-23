@@ -9,29 +9,16 @@
 		<view style="padding: 0rpx 10rpx;">
 			<ticket ref="ticket" @launchAddBill="hiddenModules">
 				<template v-slot:billForm>
-					<view class="ticket-form" v-if="tfHeight!==0" :style="{height: tfHeight==='auto'?'auto':tfHeight+'rpx'}">
-						<add-bill-form></add-bill-form>
-					</view>
+					<add-bill-form @cancleAddBill="showModules"></add-bill-form>
 				</template>
 				<template v-slot:billDetail>
-					<view>
-						<bill-list-simple></bill-list-simple>
-					</view>
+					<bill-list-simple></bill-list-simple>
 				</template>
 			</ticket>
 		</view>
-		<!-- <view class="top-background">
-			<top-background></top-background>
-			<bill-form></bill-form>
+		<view class="keypad-drawer" v-if="this.addBillStatus">
+			<keypad></keypad>
 		</view>
-		<add-bill-form></add-bill-form>
-		<view class="bill-list">
-			<bill-list></bill-list>
-		</view>
-		<view class="load-more">
-			<text class="text-gray">上滑加载更多~</text>
-		</view>
-		 -->
 	</view>
 </template>
 
@@ -42,6 +29,7 @@
 	import addBillForm from '../../components/detailModule/addBillForm.vue'
 	import ticket from '../../components/detailModule/ticket.vue'
 	import config from '../../config.js'
+	import keypad from '../../components/basic/keypad.vue'
 
 	export default {
 		components: {
@@ -49,7 +37,8 @@
 			billForm,
 			billListSimple,
 			ticket,
-			addBillForm
+			addBillForm,
+			keypad
 		},
 		data() {
 			return {
@@ -57,7 +46,7 @@
 				billInfo: [],
 				tbHeight: 115,
 				biHeight: 'auto',
-				tfHeight: 0
+				addBillStatus: false
 			}
 		},
 		onLoad() {},
@@ -82,12 +71,13 @@
 			hiddenModules: function() {
 				this.tbHeight = 0
 				this.biHeight = 0
-				this.tfHeight = 'auto'
+				this.addBillStatus = true
 			},
 			showModules: function() {
 				this.tbHeight = 115
 				this.biHeight = 'auto'
-				this.$refs.ticket.showTicketBody()
+				this.addBillStatus = false
+				this.$refs.ticket.exitAddBill()
 			}
 		}
 	}
@@ -99,17 +89,12 @@
 		font-family: 微软雅黑;
 	}
 
-	.ticket-form {
-		padding: 20rpx;
-		overflow: hidden;
-	}
-
-	.top-background {
+	/* .top-background {
 		background-color: #3eb575;
 		position: sticky;
 		top: 0;
 		z-index: 100;
-	}
+	} */
 
 	.content {
 		width: 100%;
@@ -141,5 +126,13 @@
 		font-size: 18px;
 		padding-top: 2px;
 		color: #909090;
+	}
+	
+	.keypad-drawer {
+		width: 100%;
+		padding: 0 10rpx;
+		background-color: #FFFFFF;
+		position: fixed;
+		bottom: 115rpx;
 	}
 </style>

@@ -45,6 +45,7 @@
 		border-radius: 6rpx;
 		background-color: #FFFFFF;
 		border: 1px solid #fafafa;
+		    text-align: center;
 	}
 
 	.num-key {

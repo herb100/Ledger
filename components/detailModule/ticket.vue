@@ -4,16 +4,20 @@
 		<view class="ticket-outlet"></view>
 		<view class="ticket-outlet-shadow"></view>
 		<view @touchmove="ticketTouchMove" @touchstart="ticketTouchStart" @touchend="ticketTouchEnd">
-			<view class="ticket-body" :style="{height: ticketBodyHeight==='auto'?'auto':ticketContentHeight+'rpx'}">
+			<view class="ticket-body">
 				<view class="ticket-form" :style="{height: ticketContentHeight==='auto'?'auto':ticketContentHeight+'rpx'}">
-					<view :style="{height: launchAddBillHeight}">
+					<view :style="{height: launchAddBillHeight}" v-if="billFormHeight!=='auto'">
 						<view v-if="slideDistance <= launchAddBillHeight">继续下拉创建</view>
 						<view v-else>放开创建新账单</view>
+					</view>
+					<view :style="{height: billFormHeight==='auto'?'auto':billFormHeight+'rpx', overflow: 'hidden'}">
 						<slot name="billForm"></slot>
 					</view>
 				</view>
 				<!-- 账单详情 -->
-				<slot name="billDetail"></slot>
+				<view :style="{height: billDetailHeight==='auto'?'auto':billDetailHeight+'rpx'}">
+					<slot name="billDetail"></slot>
+				</view>
 			</view>
 			<!-- 小票锯齿 -->
 			<view class="sawtooth"></view>
@@ -39,9 +43,10 @@
 			return {
 				touchStartPageY: 0,
 				touchMovePageY: 0,
-				ticketBodyHeight: 'auto',
 				// ticket 内容高度
 				ticketContentHeight: 0,
+				billFormHeight: 0,
+				billDetailHeight: 'auto',
 				// 滑动的距离
 				slideDistance: 0,
 				// 计算 rpx/px 比例
@@ -89,18 +94,23 @@
 				// 滑动是否达到指定距离
 				if (this.slideDistance >= this.launchAddBillHeight) {
 					this.initAddBill()
+				} else {
+					this.ticketContentHeight = 0
 				}
-				this.ticketContentHeight = 0
 			},
 			initAddBill: function() {
-				this.hiddenTicketBody()
+				this.ticketContentHeight = 'auto'
+				this.billFormHeight = 'auto'
+				this.billDetailHeight = 0
+				// 禁止滑动 ticket
+				this.launchTouch = false
 				this.$emit('launchAddBill')
 			},
-			hiddenTicketBody: function() {
-				this.ticketBodyHeight = 0
-			},
-			showTicketBody: function() {
-				this.ticketBodyHeight = 'auto'
+			exitAddBill: function() {
+				this.ticketContentHeight = 0
+				this.billFormHeight = 0
+				this.billDetailHeight = 'auto'
+				this.launchTouch = true
 			},
 			initTouch: function() {
 				if (this.testMode) {
@@ -142,6 +152,7 @@
 		margin-left: 10rpx;
 		background-color: #FFFFFF;
 		overflow: hidden;
+		height: auto;
 	}
 
 	.ticket-form {

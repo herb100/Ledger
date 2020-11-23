@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="add-bill-form">
 		<view class="bill-info">
 			<view class="bill-type-tag-group">
 				<view class="bill-type-tag" @tap="selectBillType" data-type="spending" :class="billTypeSelected==='spending'?'bill-type-tag-select':''">支出</view>
@@ -16,28 +16,30 @@
 				<text class="add-comment">添加备注</text>
 			</view>
 			<view class="input-solid-buttom"></view>
+			<button type="default" @click="cancleAddBill">取消</button>
 		</form>
 	</view>
 </template>
 
 <script>
 	import dateTimePicker from '../basic/dateTimePicker.vue'
-	import keypad from '../basic/keypad.vue'
 
 	export default {
 		components: {
-			keypad,
 			dateTimePicker
 		},
 		data() {
 			return {
-				modalName: '',
+				modalName: 'keypadModal',
 				billTypeSelected: 'spending'
 			}
 		},
 		methods: {
 			selectBillType(e) {
 				this.billTypeSelected = e.target.dataset.type
+			},
+			cancleAddBill: function() {
+				this.$emit('cancleAddBill')
 			},
 			showModal: function(e) {
 				this.modalName = e.currentTarget.dataset.target
@@ -50,6 +52,10 @@
 </script>
 
 <style scoped>
+	.add-bill-form {
+		position: relative;
+	}
+
 	.bill-info {
 		display: flex;
 		justify-content: space-between;
