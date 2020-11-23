@@ -1,14 +1,21 @@
 <template>
 	<view>
+		<!-- 小票出口及其阴影 -->
 		<view class="ticket-outlet"></view>
-		<view class="ticket-outlet-shadow" ></view>
+		<view class="ticket-outlet-shadow"></view>
 		<view @touchmove="ticketTouchMove" @touchstart="ticketTouchStart" @touchend="ticketTouchEnd">
-			<view class="ticket-content" :style="{height: ticketContentHeight==='auto'?'auto':ticketContentHeight+'rpx'}">
-				<view :style="{height: addBillFormHeight}">
-					<slot name="billForm"></slot>
+			<view class="ticket-body" :style="{height: ticketBodyHeight==='auto'?'auto':ticketContentHeight+'rpx'}">
+				<view class="ticket-form" :style="{height: ticketContentHeight==='auto'?'auto':ticketContentHeight+'rpx'}">
+					<view :style="{height: launchAddBillHeight}">
+						<view v-if="slideDistance <= launchAddBillHeight">继续下拉创建</view>
+						<view v-else>放开创建新账单</view>
+						<slot name="billForm"></slot>
+					</view>
 				</view>
+				<!-- 账单详情 -->
+				<slot name="billDetail"></slot>
 			</view>
-			<slot name="billDetail"></slot>
+			<!-- 小票锯齿 -->
 			<view class="sawtooth"></view>
 			<view class="sawtooth-shadow"></view>
 		</view>
@@ -18,16 +25,10 @@
 <script>
 	export default {
 		props: {
-			// addBillFormHeight + addBillFormMoreHeight 用于判断滑动是否达到指定距离
-			// 表单的高度
-			addBillFormHeight: {
+			// launchAddBillHeight 用于判断滑动是否达到指定距离
+			launchAddBillHeight: {
 				type: Number,
-				default: 200
-			},
-			// 用于下拉后回弹的距离
-			addBillFormMoreHeight: {
-				type: Number,
-				default: 50
+				default: 100
 			},
 			testMode: {
 				type: Boolean,
@@ -38,6 +39,7 @@
 			return {
 				touchStartPageY: 0,
 				touchMovePageY: 0,
+				ticketBodyHeight: 'auto',
 				// ticket 内容高度
 				ticketContentHeight: 0,
 				// 滑动的距离
@@ -65,6 +67,7 @@
 		methods: {
 			ticketTouchStart: function(e) {
 				this.touchStartPageY = e.touches[0].pageY
+				this.initTouch()
 				if (!this.launchTouch) return
 			},
 			ticketTouchMove: function(e) {
@@ -76,7 +79,7 @@
 				this.slideDistance = (this.touchMovePageY - this.touchStartPageY) * this.proportion
 
 				// 滑动是否达到指定距离
-				if (this.slideDistance <= this.addBillFormHeight + this.addBillFormMoreHeight) {
+				if (this.slideDistance <= this.launchAddBillHeight) {
 					this.ticketContentHeight = this.touchStartPageY + this.slideDistance
 				}
 			},
@@ -84,11 +87,20 @@
 				if (!this.launchTouch) return
 
 				// 滑动是否达到指定距离
-				if (this.slideDistance <= this.addBillFormHeight + this.addBillFormMoreHeight) {
-					this.ticketContentHeight = 0
-				} else {
-					this.ticketContentHeight = 'auto'
+				if (this.slideDistance >= this.launchAddBillHeight) {
+					this.initAddBill()
 				}
+				this.ticketContentHeight = 0
+			},
+			initAddBill: function() {
+				this.hiddenTicketBody()
+				this.$emit('launchAddBill')
+			},
+			hiddenTicketBody: function() {
+				this.ticketBodyHeight = 0
+			},
+			showTicketBody: function() {
+				this.ticketBodyHeight = 'auto'
 			},
 			initTouch: function() {
 				if (this.testMode) {
@@ -98,7 +110,7 @@
 				if (this.touchStartPageY > this.screenHeight) {
 					this.launchTouch = false
 				}
-			}
+			},
 		}
 	}
 </script>
@@ -124,7 +136,15 @@
 		background-color: #FFFFFF;
 	}
 
-	.ticket-content {
+	.ticket-body {
+		box-shadow: 0 10px 5px -3px #7d7d7d;
+		width: calc(100% - 20rpx);
+		margin-left: 10rpx;
+		background-color: #FFFFFF;
+		overflow: hidden;
+	}
+
+	.ticket-form {
 		width: calc(100% - 20rpx);
 		margin-left: 10rpx;
 		position: relative;
