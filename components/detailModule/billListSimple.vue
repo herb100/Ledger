@@ -13,32 +13,6 @@
 			</view>
 			<view class="solid-bottom-line"></view>
 		</view>
-		<view class="bill-item">
-			<view class="bill-content">
-				<view class="bill-icon">
-					<i class="iconfont icon-canyin"></i>
-					<text class="bill-type-name">餐饮</text>
-				</view>
-				<view class="bill-number">
-					<text class="bill-integer-number">10</text>
-					<text class="bill-decimal-number">.40</text>
-				</view>
-			</view>
-			<view class="solid-bottom-line"></view>
-		</view>
-		<view class="bill-item">
-			<view class="bill-content">
-				<view class="bill-icon">
-					<i class="iconfont icon-canyin"></i>
-					<text class="bill-type-name">餐饮</text>
-				</view>
-				<view class="bill-number">
-					<text class="bill-integer-number">10</text>
-					<text class="bill-decimal-number">.40</text>
-				</view>
-			</view>
-			<view class="solid-bottom-line"></view>
-		</view>
 	</view>
 </template>
 

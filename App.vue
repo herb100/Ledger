@@ -3,8 +3,18 @@
 	import mockApi from './utils/mockApi.js'
 	
 	export default {
+		globalData: {
+			systemInfo: {}
+		},
 		onLaunch: function() {
 			console.log('App Launch')
+			let _self = this
+			uni.getSystemInfo({
+				success: function(info) {
+					_self.globalData.systemInfo = info
+					_self.globalData.systemInfo.proportion = 750 / info.screenWidth
+				}
+			})
 		},
 		onShow: function() {
 			console.log('App Show')

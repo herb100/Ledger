@@ -56,14 +56,9 @@
 			}
 		},
 		beforeMount: function() {
-			let _self = this
-
-			uni.getSystemInfo({
-				success: function(res) {
-					_self.screenHeight = res.windowHeight
-					_self.proportion = 750 / res.screenWidth
-				}
-			})
+			const systemInfo = getApp().globalData.systemInfo
+			this.screenHeight = systemInfo.windowHeight
+			this.proportion = systemInfo.proportion
 
 			if (this.testMode) {
 				this.ticketContentHeight = 'auto'

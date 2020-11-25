@@ -16,7 +16,9 @@
 				</template>
 			</ticket>
 		</view>
-		<view class="keypad-drawer" v-if="this.addBillStatus">
+		<view class="keypad-drawer" v-if="kpStatus" 
+			:style="{height: kpHeight==='auto'?'auto':kpHeight+'rpx', top: kpTop+'rpx'}
+		">
 			<keypad></keypad>
 		</view>
 	</view>
@@ -46,13 +48,20 @@
 				billInfo: [],
 				tbHeight: 115,
 				biHeight: 'auto',
-				addBillStatus: false
+				kpHeight: 480,
+				kpStatus: false,
+				kpTop: 0
 			}
 		},
 		onLoad() {},
 		beforeMount: function() {
-			let _self = this
 			// this.get_bill(_self)
+
+			// 计算 keypad 位置
+			let systemInfo = getApp().globalData.systemInfo
+			let windowHeight = systemInfo.windowHeight
+			let proportion = systemInfo.proportion
+			this.kpTop = windowHeight*proportion - this.kpHeight
 		},
 		mounted: function() {},
 		methods: {
@@ -71,12 +80,12 @@
 			hiddenModules: function() {
 				this.tbHeight = 0
 				this.biHeight = 0
-				this.addBillStatus = true
+				this.kpStatus = true
 			},
 			showModules: function() {
 				this.tbHeight = 115
 				this.biHeight = 'auto'
-				this.addBillStatus = false
+				this.kpStatus = false
 				this.$refs.ticket.exitAddBill()
 			}
 		}
@@ -109,14 +118,6 @@
 		width: 95%;
 		margin: 0 2.5%;
 	}
-
-	.load-more {
-		text-align: center;
-		width: auto;
-		margin-top: 15rpx;
-		line-height: 85rpx;
-		height: 80rpx;
-	}
 	
 	.integer-number {
 		font-size: 22px;
@@ -130,9 +131,8 @@
 	
 	.keypad-drawer {
 		width: 100%;
-		padding: 0 10rpx;
-		background-color: #FFFFFF;
+		padding: 12rpx 10rpx;
+		background-color: red;
 		position: fixed;
-		bottom: 115rpx;
 	}
 </style>
