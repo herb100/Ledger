@@ -1,17 +1,12 @@
 <template>
 	<view class="content">
-		<view class="top-background">
-			<top-background></top-background>
-		</view>
+		this is my page
 	</view>
 </template>
 
 <script>
-	import topBackground from '../../components/common/topBackground.vue'
-	
 	export default {
 		components: {
-			'top-background': topBackground,
 		},
 		data() {
 			return {

@@ -1,20 +1,19 @@
 <template>
 	<view class="content">
-		<view class="top-background">
-			<top-background></top-background>
-		</view>
+		<top-line-chart :tbHeight="tlcHeight"></top-line-chart>
 	</view>
 </template>
 
 <script>
-	import topBackground from '../../components/common/topBackground.vue'
+	import topLineChart from '../../components/common/topLineChart.vue'
 	
 	export default {
 		components: {
-			'top-background': topBackground,
+			topLineChart
 		},
 		data() {
 			return {
+				tlcHeight: 115,
 				title: 'this is statistical page'
 			}
 		},

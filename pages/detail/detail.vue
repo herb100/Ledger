@@ -1,6 +1,8 @@
 <template>
 	<view class="content">
-		<top-background :tbHeight="tbHeight"></top-background>
+		<view class="top-line-chart" :style="{height: tlcHeight==='auto'?'auto':tlcHeight+'rpx'}">
+			<top-line-chart  ></top-line-chart>
+		</view>
 		<view class="bill-info" :style="{height: biHeight==='auto'?'auto':biHeight+'rpx'}">
 			<text class="integer-number">10.09</text>
 			<text class="integer-number"><text class="text-price">361</text></text>
@@ -16,16 +18,14 @@
 				</template>
 			</ticket>
 		</view>
-		<view class="keypad-drawer" v-if="kpStatus" 
-			:style="{height: kpHeight==='auto'?'auto':kpHeight+'rpx', top: kpTop+'rpx'}
-		">
+		<view class="keypad-drawer" v-if="kpStatus" :style="{height: kpHeight+'rpx'}">
 			<keypad></keypad>
 		</view>
 	</view>
 </template>
 
 <script>
-	import topBackground from '../../components/common/topBackground.vue'
+	import topLineChart from '../../components/common/topLineChart.vue'
 	import billForm from '../../components/detailModule/billForm.vue'
 	import billListSimple from '../../components/detailModule/billListSimple.vue'
 	import addBillForm from '../../components/detailModule/addBillForm.vue'
@@ -35,7 +35,7 @@
 
 	export default {
 		components: {
-			topBackground,
+			topLineChart,
 			billForm,
 			billListSimple,
 			ticket,
@@ -46,25 +46,24 @@
 			return {
 				title: 'this is detail page',
 				billInfo: [],
-				tbHeight: 115,
+				tlcHeight: 'auto',
 				biHeight: 'auto',
-				kpHeight: 480,
-				kpStatus: false,
-				kpTop: 0
+				kpHeight: 470,
+				kpStatus: false
 			}
 		},
 		onLoad() {},
 		beforeMount: function() {
 			// this.get_bill(_self)
-
-			// 计算 keypad 位置
-			let systemInfo = getApp().globalData.systemInfo
-			let windowHeight = systemInfo.windowHeight
-			let proportion = systemInfo.proportion
-			this.kpTop = windowHeight*proportion - this.kpHeight
 		},
 		mounted: function() {},
 		methods: {
+			showModal(e) {
+				this.modalName = e.currentTarget.dataset.target
+			},
+			hideModal(e) {
+				this.modalName = null
+			},
 			get_bill: function(_self) {
 				uni.request({
 					url: config.baseUrl + '/bill',
@@ -78,12 +77,12 @@
 				})
 			},
 			hiddenModules: function() {
-				this.tbHeight = 0
+				this.tlcHeight = 0
 				this.biHeight = 0
 				this.kpStatus = true
 			},
 			showModules: function() {
-				this.tbHeight = 115
+				this.tlcHeight = 'auto'
 				this.biHeight = 'auto'
 				this.kpStatus = false
 				this.$refs.ticket.exitAddBill()
@@ -98,12 +97,9 @@
 		font-family: 微软雅黑;
 	}
 
-	/* .top-background {
-		background-color: #3eb575;
-		position: sticky;
-		top: 0;
-		z-index: 100;
-	} */
+	.top-line-chart {
+		overflow: hidden;
+	}
 
 	.content {
 		width: 100%;
@@ -131,8 +127,9 @@
 	
 	.keypad-drawer {
 		width: 100%;
-		padding: 12rpx 10rpx;
-		background-color: red;
+		background-color: #f1f1f1;
 		position: fixed;
+		z-index: 1000;
+		bottom: 0;
 	}
 </style>
