@@ -25,3 +25,4 @@ Alt+Shift+F 默认格式化快捷键
 [vue.js 官网](https://cn.vuejs.org/v2/guide/)
 [uniapp Vue 特性兼容问题](https://uniapp.dcloud.io/use?id=vue%e7%89%b9%e6%80%a7%e6%94%af%e6%8c%81%e8%a1%a8)
 [uniapp 跨端兼容](https://uniapp.dcloud.io/platform?id=%e8%b7%a8%e7%ab%af%e5%85%bc%e5%ae%b9)
+[ucharts](http://doc.ucharts.cn/)

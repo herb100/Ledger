@@ -1,15 +1,18 @@
 <template>
 	<view class="content">
 		<top-line-chart :tbHeight="tlcHeight"></top-line-chart>
+		<ring-chart></ring-chart>
 	</view>
 </template>
 
 <script>
-	import topLineChart from '../../components/common/topLineChart.vue'
+	import topLineChart from '@/components/common/topLineChart.vue'
+	import ringChart from '@/components/statisticalModule/ringChart.vue'
 	
 	export default {
 		components: {
-			topLineChart
+			topLineChart,
+			ringChart
 		},
 		data() {
 			return {
@@ -27,6 +30,11 @@
 </script>
 
 <style scoped>
+	page {
+		background-color: #ededed;
+		font-family: 微软雅黑;
+	}
+
 	.content {
 		width: 100%;
 	}

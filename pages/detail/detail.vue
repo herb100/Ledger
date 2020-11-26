@@ -25,13 +25,13 @@
 </template>
 
 <script>
-	import topLineChart from '../../components/common/topLineChart.vue'
-	import billForm from '../../components/detailModule/billForm.vue'
-	import billListSimple from '../../components/detailModule/billListSimple.vue'
-	import addBillForm from '../../components/detailModule/addBillForm.vue'
-	import ticket from '../../components/detailModule/ticket.vue'
-	import config from '../../config.js'
-	import keypad from '../../components/basic/keypad.vue'
+	import topLineChart from '@/components/common/topLineChart.vue'
+	import billForm from '@/components/detailModule/billForm.vue'
+	import billListSimple from '@/components/detailModule/billListSimple.vue'
+	import addBillForm from '@/components/detailModule/addBillForm.vue'
+	import ticket from '@/components/detailModule/ticket.vue'
+	import config from '@/config.js'
+	import keypad from '@/components/basic/keypad.vue'
 
 	export default {
 		components: {

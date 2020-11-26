@@ -22,7 +22,7 @@
 </template>
 
 <script>
-	import dateTimePicker from '../basic/dateTimePicker.vue'
+	import dateTimePicker from '@/components/basic/dateTimePicker.vue'
 
 	export default {
 		components: {
