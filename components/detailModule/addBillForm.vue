@@ -60,14 +60,16 @@
 		display: flex;
 		justify-content: space-between;
 	}
+
 	.bill-type-tag-group {
 		margin-left: 10rpx;
 	}
+
 	.bill-datetime-group {
 		margin-right: 10rpx;
 	}
-	
-	.bill-type-tag{
+
+	.bill-type-tag {
 		display: inline-flex;
 		background-color: #f1f1f1;
 		color: #aaaaaa;
@@ -83,26 +85,31 @@
 		font-family: Helvetica Neue, Helvetica, sans-serif;
 		white-space: nowrap;
 	}
-	.bill-type-tag-select{
+
+	.bill-type-tag-select {
 		color: #FFFFFF;
 		background-color: #006690;
 	}
-	.money-price{
+
+	.money-price {
 		font-size: 45rpx;
 		margin-right: 30rpx;
 	}
-	.money-price::before{
+
+	.money-price::before {
 		content: "¥ ";
 		font-size: 80%;
 		margin-right: 4rpx;
 	}
+
 	.input-solid-buttom {
 		width: 65%;
-		    background-color: #d0d0d0;
-		    height: 1rpx;
-		    margin-top: -20rpx;
-		    margin-left: 73rpx;
+		background-color: #d0d0d0;
+		height: 1rpx;
+		margin-top: -20rpx;
+		margin-left: 73rpx;
 	}
+
 	.add-comment {
 		color: #7686a8;
 		text-align: right;

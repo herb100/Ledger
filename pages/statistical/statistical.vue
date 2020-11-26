@@ -2,17 +2,20 @@
 	<view class="content">
 		<top-line-chart :tbHeight="tlcHeight"></top-line-chart>
 		<ring-chart></ring-chart>
+		<cost-list></cost-list>
 	</view>
 </template>
 
 <script>
 	import topLineChart from '@/components/common/topLineChart.vue'
 	import ringChart from '@/components/statisticalModule/ringChart.vue'
+	import costList from '@/components/statisticalModule/CostList.vue'
 	
 	export default {
 		components: {
 			topLineChart,
-			ringChart
+			ringChart,
+			costList
 		},
 		data() {
 			return {

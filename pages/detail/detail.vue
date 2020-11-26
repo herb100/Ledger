@@ -4,9 +4,9 @@
 			<top-line-chart  ></top-line-chart>
 		</view>
 		<view class="bill-info" :style="{height: biHeight==='auto'?'auto':biHeight+'rpx'}">
-			<text class="integer-number">10.09</text>
-			<text class="integer-number"><text class="text-price">361</text></text>
-			<text class="decimal-number">.00</text>
+			<text class="bill-integer-number">10.09</text>
+			<text class="bill-integer-number"><text class="text-price">361</text></text>
+			<text class="bill-decimal-number">.00</text>
 		</view>
 		<view style="padding: 0rpx 10rpx;">
 			<ticket ref="ticket" @launchAddBill="hiddenModules">
@@ -115,11 +115,11 @@
 		margin: 0 2.5%;
 	}
 	
-	.integer-number {
+	.bill-integer-number {
 		font-size: 22px;
 	}
 	
-	.decimal-number {
+	.bill-decimal-number {
 		font-size: 18px;
 		padding-top: 2px;
 		color: #909090;

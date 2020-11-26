@@ -102,7 +102,7 @@
 		font-size: 1rpx;
 		color: #9dd9b8;
 	}
-	
+
 	.bill-type-modal-body {
 		height: 550rpx;
 		color: #000000;

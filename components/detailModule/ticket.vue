@@ -120,7 +120,7 @@
 	}
 </script>
 
-<style>
+<style scoped>
 	.ticket {
 		position: relative;
 	}
