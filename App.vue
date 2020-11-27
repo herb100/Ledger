@@ -9,12 +9,14 @@
 		onLaunch: function() {
 			console.log('App Launch')
 			let _self = this
+			// #ifdef MP-WEIXIN
 			uni.getSystemInfo({
 				success: function(info) {
 					_self.globalData.systemInfo = info
 					_self.globalData.systemInfo.proportion = 750 / info.screenWidth
 				}
 			})
+			// #endif
 		},
 		onShow: function() {
 			console.log('App Show')

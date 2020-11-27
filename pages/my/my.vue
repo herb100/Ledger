@@ -52,15 +52,19 @@
 </template>
 
 <script>
+	import {
+		wxAuth
+	} from '@/static/js/common.js'
+
 	export default {
 		components: {},
 		data() {
 			return {
-				title: 'this is setting page'
+				title: 'this is setting page',
 			}
 		},
-		onLoad() {
-
+		beforeCreate: function() {
+			wxAuth('scope.userInfo')
 		},
 		methods: {
 
@@ -97,31 +101,31 @@
 	.cu-list.menu-avatar>.end {
 		border-radius: 0rpx 0rpx 10rpx 10rpx;
 	}
-	
+
 	.cu-avatar.lg {
 		width: 75rpx;
 		height: 75rpx;
 	}
-	
+
 	.my-account>.title {
 		color: grey;
 	}
-	
+
 	.cu-list.menu-avatar>.cu-item .content {
 		margin-left: -40rpx;
 	}
-	
+
 	.cu-list.menu-avatar>.cu-item .backup {
 		width: 100%;
 		text-align: center;
 		font-size: 35rpx;
 	}
-	
+
 	.cu-list.menu-avatar>.cu-item .content>.account-name {
 		font-size: 35rpx;
 		font-weight: 100;
 	}
-	
+
 	.cu-list.menu-avatar>.cu-item .content>.account-email {
 		margin-top: -10rpx;
 	}

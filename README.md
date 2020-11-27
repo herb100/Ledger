@@ -15,7 +15,12 @@ Alt+Shift+F 默认格式化快捷键
   > 解决办法：
   > 微信小程序要使用 wx.createSelectorQuery() 
   > (非H5端只能用于获取自定义组件，不能用于获取内置组件实例,如：view、text)，详见 uniapp 跨端兼容
-3. 
+3. 预览出错 
+  > 错误：app-service.js: TypeError: Cannot read property 'getElementsByTagName' of undefined
+  > 试验：1 与其他 iconfont 字体同文件夹下会报此错误，其他位置不报错
+  >      2 与其他 iconfont 字体同文件夹下，其他命名不执行，iconfont.js 必执行
+  >      3 搜索字体文件没有关于 iconfont.js 的引用
+  > 猜测：可能是 iconfont 文件使用了其他方式调用
 
 #### 参考
 [导航栏凸起参考](https://blog.csdn.net/weixin_45788691/article/details/107672635)

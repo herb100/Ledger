@@ -52,7 +52,6 @@
 				kpStatus: false
 			}
 		},
-		onLoad() {},
 		beforeMount: function() {
 			// this.get_bill(_self)
 		},
