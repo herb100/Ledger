@@ -10,7 +10,7 @@
 	import topLineChart from '@/components/common/topLineChart.vue'
 	import ringChart from '@/components/statisticalModule/ringChart.vue'
 	import costList from '@/components/statisticalModule/CostList.vue'
-	
+
 	export default {
 		components: {
 			topLineChart,
