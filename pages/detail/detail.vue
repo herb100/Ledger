@@ -1,7 +1,7 @@
 <template>
 	<view class="content">
 		<view class="top-line-chart" :style="{height: tlcHeight==='auto'?'auto':tlcHeight+'rpx'}">
-			<top-line-chart  ></top-line-chart>
+			<top-line-chart></top-line-chart>
 		</view>
 		<view class="bill-info" :style="{height: biHeight==='auto'?'auto':biHeight+'rpx'}">
 			<text class="bill-integer-number">10.09</text>
@@ -11,7 +11,7 @@
 		<view style="padding: 0rpx 10rpx;">
 			<ticket ref="ticket" @launchAddBill="hiddenModules">
 				<template v-slot:billForm>
-					<add-bill-form @cancleAddBill="showModules"></add-bill-form>
+					<add-bill-form :billValue="newBillValue"></add-bill-form>
 				</template>
 				<template v-slot:billDetail>
 					<bill-list-simple></bill-list-simple>
@@ -19,7 +19,7 @@
 			</ticket>
 		</view>
 		<view class="keypad-drawer" v-if="kpStatus" :style="{height: kpHeight+'rpx'}">
-			<keypad></keypad>
+			<keypad @changeValue="changeNewBillValue" @cancleBill="cancleBill" @createBill="createBill"></keypad>
 		</view>
 	</view>
 </template>
@@ -48,19 +48,29 @@
 				billInfo: [],
 				tlcHeight: 'auto',
 				biHeight: 'auto',
-				kpHeight: 470,
-				kpStatus: false
+				kpHeight: 345,
+				kpStatus: false,
+				newBillValue: '',
+				newBillComment: ''
 			}
 		},
 		beforeMount: function() {
 			// this.get_bill(_self)
 		},
-		mounted: function() {},
 		methods: {
-			showModal(e) {
+			changeNewBillValue: function(value) {
+				this.newBillValue = value
+			},
+			createBill: function() {
+				this.showModules()
+			},
+			cancleBill: function() {
+				this.showModules()
+			},
+			showModal: function(e) {
 				this.modalName = e.currentTarget.dataset.target
 			},
-			hideModal(e) {
+			hideModal: function(e) {
 				this.modalName = null
 			},
 			get_bill: function(_self) {

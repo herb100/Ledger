@@ -1,12 +1,12 @@
 <template>
 	<view class="keypad">
-		<span class="left-part">
-			<span class="common" v-for="(item, index) in leftKeys" :class="item['key']+'-key'">
+		<span class="left-part" ref="leftPart">
+			<span class="common" @click="changeValue(item['value'])" v-for="(item, index) in leftKeys" :key="index" :class="item['key']+'-key'">
 				{{item['value']}}
 			</span>
 		</span>
 		<span class="right-part">
-			<span class="common" v-for="(item, index) in rightKeys" :class="item['key']+'-key'">
+			<span class="common" @click="changeValue(item['value'])" v-for="(item, index) in rightKeys" :key="index" :class="item['key']+'-key'">
 				{{item['value']}}
 			</span>
 		</span>
@@ -18,18 +18,6 @@
 		data() {
 			return {
 				leftKeys: [{
-						value: 'type',
-						key: 'common'
-					},
-					{
-						value: '/',
-						key: 'common'
-					},
-					{
-						value: '*',
-						key: 'common'
-					},
-					{
 						value: 1,
 						key: 'common'
 					},
@@ -66,13 +54,17 @@
 						key: 'common'
 					},
 					{
-						value: 0,
-						key: 'zero'
-					},
-					{
 						value: '.',
 						key: 'common'
 					},
+					{
+						value: 0,
+						key: 'common'
+					},
+					{
+						value: 'delete',
+						key: 'common'
+					}
 				],
 				rightKeys: [{
 						value: '-',
@@ -86,7 +78,50 @@
 						value: '确定',
 						key: 'confirm'
 					},
-				]
+					{
+						value: '取消',
+						key: 'cancle'
+					}
+				],
+				keypadValue: ''
+			}
+		},
+		methods: {
+			changeValue: function(value) {
+				switch (value) {
+					case '确定':
+						let {res, isRight} = this.calString(this.keypadValue)
+						
+						if (isRight) {
+							this.$emit('createBill')
+						}
+						break;
+					case '取消':
+						this.$emit('cancleBill')
+						break;
+					case 'delete':
+						let len = this.keypadValue.length
+						this.keypadValue = this.keypadValue.substr(0, len - 1)
+						break;
+					default:
+						this.keypadValue += value
+				}
+				this.$emit('changeValue', this.keypadValue)
+			},
+			calString: function(keypadValue) {
+				// 中缀表达式？
+				let isRight = true
+				
+				try {
+					for (let i = 0; i < keypadValue.length; i++) {
+						console.log(keypadValue[i])
+					}
+				} catch(err) {
+					// console.log(err)
+					isRight = false
+				}
+				
+				return {res: 1, isRight: isRight}
 			}
 		}
 	}
@@ -122,13 +157,13 @@
 		border: 1px solid #fafafa;
 		text-align: center;
 		margin: 1px;
+		height: 25%;
+		line-height: 72rpx;
 	}
 
 	.common-key {
-		height: 20.5%;
-		line-height: 72rpx;
 		/* #ifdef MP-WEIXIN */
-		width: 31.5%;
+		width: 32%;
 		/* #endif */
 		/* #ifndef MP-WEIXIN */
 		width: 31.5%;
@@ -136,28 +171,21 @@
 	}
 
 	.zero-key {
-		height: 20.5%;
-		line-height: 72rpx;
 		width: 63.5%;
 	}
 
-	.sub-key {
-		height: 20.5%;
-		line-height: 72rpx;
-		width: 100%;
-	}
-
+	.sub-key,
 	.add-key {
 		width: 100%;
-		height: 43.1%;
-		line-height: 148rpx;
 	}
 
 	.confirm-key {
-		background-color: #9cd7b7;
-		color: #f6faf8;
+		height: 25%;
 		width: 100%;
-		height: 43.1%;
-		line-height: 148rpx;
+	}
+
+	.cancle-key {
+		height: 25%;
+		width: 100%;
 	}
 </style>

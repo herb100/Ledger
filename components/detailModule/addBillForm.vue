@@ -12,11 +12,10 @@
 		<form>
 			<view class="cu-form-group">
 				<text class='money-price text-black'></text>
-				<input name="money"></input>
+				<input name="money" :value="billValue" disabled="disabled"></input>
 				<text class="add-comment">添加备注</text>
 			</view>
 			<view class="input-solid-buttom"></view>
-			<button type="default" @click="cancleAddBill">取消</button>
 		</form>
 	</view>
 </template>
@@ -25,27 +24,23 @@
 	import dateTimePicker from '@/components/basic/dateTimePicker.vue'
 
 	export default {
+		props: {
+			billValue: {
+				type: String,
+				default: ''
+			}
+		},
 		components: {
 			dateTimePicker
 		},
 		data() {
 			return {
-				modalName: 'keypadModal',
 				billTypeSelected: 'spending'
 			}
 		},
 		methods: {
 			selectBillType(e) {
 				this.billTypeSelected = e.target.dataset.type
-			},
-			cancleAddBill: function() {
-				this.$emit('cancleAddBill')
-			},
-			showModal: function(e) {
-				this.modalName = e.currentTarget.dataset.target
-			},
-			hideModal: function(e) {
-				this.modalName = null
 			}
 		}
 	}

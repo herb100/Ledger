@@ -19,7 +19,12 @@
 <script>
 	export default {
 		data() {
-			return {}
+			return {
+				billList: []
+			}
+		},
+		beforeMount:function(){
+			
 		}
 	}
 </script>
