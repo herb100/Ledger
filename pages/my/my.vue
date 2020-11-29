@@ -1,15 +1,23 @@
 <template>
 	<view class="content">
-		<view class="my-account">
+		<view v-if="!ifScopeUserInfo">
+			<!-- #ifdef MP-WEIXIN -->
+			<button class="login-button" open-type="getUserInfo" @getuserinfo="userInfoHandler"/>
+			<!-- #endif -->
+			<!-- #ifndef MP-WEIXIN -->
+			<button class="login-button" @click="loginWx"></button>
+			<!-- #endif -->
+		</view>
+		<view v-if="ifScopeUserInfo" class="my-account">
 			<view class="title">账户</view>
 			<view class="cu-list menu-avatar">
 				<view class="cu-item single">
-					<view class="cu-avatar round lg" style="background-image:url(https://ossweb-img.qq.com/images/lol/web201310/skin/big10001.jpg);"></view>
+					<view class="cu-avatar round lg" :style="{backgroundImage: 'url('+userInfo.avatarUrl+')'}"></view>
 					<view class="content">
-						<view class="text-white account-name">我是渣渣辉</view>
+						<view class="text-white account-name">{{userInfo.nickName}}</view>
 						<view class="text-gray flex account-email">
 							<view class="text-cut">
-								zhazhahui@qq.com
+								{{userInfo.email}}
 							</view>
 						</view>
 					</view>
@@ -19,7 +27,7 @@
 				</view>
 			</view>
 		</view>
-		<view class="my-account">
+		<view v-if="ifScopeUserInfo" class="my-general">
 			<view class="title">通用</view>
 			<view class="cu-list menu-avatar">
 				<view class="cu-item single">
@@ -37,13 +45,13 @@
 				</view>
 			</view>
 		</view>
-		<view class="my-account">
+		<view v-if="ifScopeUserInfo" class="my-data">
 			<view class="title">数据</view>
 			<view class="cu-list menu-avatar">
-				<view class="cu-item single">
+				<view class="cu-item start">
 					<view class="text-white backup">备份数据</view>
 				</view>
-				<view class="cu-item single">
+				<view class="cu-item end">
 					<view class="text-white backup">同步数据</view>
 				</view>
 			</view>
@@ -52,22 +60,75 @@
 </template>
 
 <script>
-	import {
-		wxAuth
-	} from '@/static/js/common.js'
-
 	export default {
-		components: {},
 		data() {
 			return {
 				title: 'this is setting page',
+				ifScopeUserInfo: false,
+				userInfo: {
+					avatarUrl: '',
+					nickName: '',
+					email: ''
+				}
 			}
 		},
-		beforeCreate: function() {
-			wxAuth('scope.userInfo')
+		beforeMount: function() {
+			let _self = this
+			
+			try {
+			    const userInfo = uni.getStorageSync('userInfo')
+
+			    if (userInfo) {
+					_self.ifScopeUserInfo = true
+					_self.userInfo.avatarUrl = userInfo.avatarUrl || ''
+					_self.userInfo.nickName = userInfo.nickName || ''
+			    } else {
+					uni.getSetting({
+						success:function(res){
+							if ('scope.userInfo' in res.authSetting && res.authSetting['scope.userInfo']) {
+								_self.ifScopeUserInfo = true
+								_self.initData(_self)
+							}
+						}
+					})
+				}
+			} catch (e) {
+			    // error
+			}
 		},
 		methods: {
+			userInfoHandler: function(e) {
+				if (!('rawData' in e.detail)) {
+					return
+				}
+				this.ifScopeUserInfo = true
+				let data = JSON.parse(e.detail.rawData)
+				this.userInfo['avatarUrl'] = data.avatarUrl || ''
+				this.userInfo['nickName'] = data.nickName || ''
 
+				uni.setStorage({
+					key: 'userInfo',
+					data: this.userInfo
+				})
+				
+			},
+			initData: function(_self) {
+				try {
+				    const userInfo = uni.getStorageSync('userInfo')
+				
+				    if (userInfo) {
+						_self.ifScopeUserInfo = true
+						_self.userInfo.avatarUrl = res.data.avatarUrl || ''
+						_self.userInfo.nickName = res.data.nickName || ''
+				    }
+				} catch (e) {
+				    uni.showToast({
+				    	title:'get user info error',
+				    	duration: 2000,
+				    	icon: 'loading'
+				    })
+				}
+			}
 		}
 	}
 </script>
@@ -82,10 +143,25 @@
 		width: 100%;
 		padding: 0rpx 20rpx;
 	}
+	
+	.login-button {
+		background-color: grey;
+		width: 100%;
+		height: 120rpx;
+	}
+	
+	.login-button::before {
+		content: '登录';
+		color: #FFFFFF;
+		font-size: 14px;
+		font-weight: 100;
+		text-align: center;
+	}
 
 	.cu-list.menu-avatar>.cu-item {
 		background-color: grey;
 		height: 120rpx;
+		margin: 2rpx 0rpx;
 	}
 
 	.cu-list.menu-avatar>.single {
