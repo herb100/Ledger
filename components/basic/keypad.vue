@@ -83,15 +83,16 @@
 						key: 'cancle'
 					}
 				],
-				keypadValue: ''
+				keypadValue: [''],
+				keypadLastValueType: ''
 			}
 		},
 		methods: {
 			changeValue: function(value) {
 				switch (value) {
 					case '确定':
-						let {res, isRight} = this.calString(this.keypadValue)
-						
+						let {res, isRight} = this.calString(value)
+
 						if (isRight) {
 							this.$emit('createBill')
 						}
@@ -99,29 +100,93 @@
 					case '取消':
 						this.$emit('cancleBill')
 						break;
+				}
+				
+				if (this.keypadValue.length === 0) {
+					this.keypadValue.push('')
+				}
+
+				let keypadLastIndex = this.keypadValue.length - 1
+				let keypadLastValue = this.keypadValue[keypadLastIndex]
+				let keypadLastType = this.checkType(keypadLastValue)
+				let curValueType = this.checkType(value)
+				
+				switch(curValueType) {
+					case 'dots':
+						if (keypadLastType === 'operator') {
+							this.keypadValue.push('0.')
+							break
+						}
+						if (keypadLastValue === '') {
+							this.keypadValue[keypadLastIndex] = '0.'
+							break
+						}
+						if (!keypadLastValue.endsWith('.') && keypadLastValue.indexOf('.') === -1) {
+							this.keypadValue[keypadLastIndex] = keypadLastValue + '.'
+						}
+						break
+					case 'number':
+						let dotsIndex = keypadLastValue.indexOf('.')
+						
+						if (keypadLastType === 'operator') {
+							this.keypadValue.push(value.toString())
+							break
+						}
+
+						if (dotsIndex === -1) {
+							this.keypadValue[keypadLastIndex] = keypadLastValue + value
+						} else {
+							if (keypadLastValue.length - 1 - dotsIndex < 2) {
+								this.keypadValue[keypadLastIndex] = keypadLastValue + value
+							}
+						}
+						break
+					case 'operator':
+						if (this.checkType(keypadLastValue) === 'operator') {
+							this.keypadValue[keypadLastIndex] = value
+						} else {
+							this.keypadValue.push(value)
+						}
+						break
 					case 'delete':
-						let len = this.keypadValue.length
-						this.keypadValue = this.keypadValue.substr(0, len - 1)
-						break;
-					default:
-						this.keypadValue += value
+						this.keypadValue[keypadLastIndex] = keypadLastValue.substr(0, keypadLastValue.length - 1)
+
+						if (this.keypadValue[keypadLastIndex] === '' && this.keypadValue.length !== 0) {
+							this.keypadValue.pop()
+						}
+						break
 				}
-				this.$emit('changeValue', this.keypadValue)
+				this.$emit('changeValue', this.keypadValue.join(''))
 			},
-			calString: function(keypadValue) {
-				// 中缀表达式？
-				let isRight = true
+			calString: function(value) {
+				// 中缀表达式求值
+				let isRight = false
 				
-				try {
-					for (let i = 0; i < keypadValue.length; i++) {
-						console.log(keypadValue[i])
-					}
-				} catch(err) {
-					// console.log(err)
-					isRight = false
+				for (let value of this.keypadValue) {
+					console.log(value)
 				}
-				
-				return {res: 1, isRight: isRight}
+
+				return {
+					res: 1,
+					isRight: isRight
+				}
+			},
+			checkType: function(value) {
+				const operators = ['+', '-', '*', '/']
+
+				if (value === '.') {
+					return 'dots'
+				}
+				if (value === 'delete') {
+					return 'delete'
+				}
+				if (!isNaN(value)) {
+					return 'number'
+				}
+				if (operators.indexOf(value) !== -1) {
+					return 'operator'
+				}
+				return ''
 			}
 		}
 	}

@@ -63,6 +63,9 @@
 			if (this.testMode) {
 				this.ticketContentHeight = 'auto'
 			}
+
+			// 用于启动添加账单模式，可以直接显示添加账单
+			// this.initAddBill()
 		},
 		methods: {
 			ticketTouchStart: function(e) {
