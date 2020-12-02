@@ -61,8 +61,8 @@
 			changeNewBillValue: function(value) {
 				this.newBillValue = value
 			},
-			createBill: function(res) {
-				console.log('createBill ', res)
+			createBill: function(billValue) {
+				console.log('createBill ', billValue)
 				this.showModules()
 			},
 			cancleBill: function() {

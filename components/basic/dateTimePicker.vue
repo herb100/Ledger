@@ -2,9 +2,9 @@
 	<view class="date-time-picker">
 		<view class="uni-padding-wrap">
 			<view class="picker" @tap="showModal" data-target="dateTimePickerModal">
-				{{year}}年
+				<text v-if="">{{year}}年</text>
 				<text>{{month}}月</text>
-				<!-- <text>{{day}}日</text> -->
+				<text>{{day}}日</text>
 				<!-- <slot name="datetimeIcon"></slot> -->
 				<span class="more-date">▼</span>
 			</view>
@@ -16,16 +16,16 @@
 					<view class="action text-blue" @tap="hideModal">取消</view>
 				</view>
 				<view class="padding-xl bill-type-modal-body">
-					<picker-view :indicator-style="indicatorStyle" :value="value" @change="bindChange" class="bill-type-modal-body">
+					<picker-view :indicator-style="indicatorStyle" :value="value" @change="pickerChange" class="bill-type-modal-body">
 						<picker-view-column>
-							<view class="item" v-for="(item,index) in this.years" :key="index">{{item}}年</view>
+							<view class="item" v-for="(item,index) in years" :key="index">{{item}}年</view>
 						</picker-view-column>
 						<picker-view-column>
-							<view class="item" v-for="(item,index) in this.months" :key="index">{{item}}月</view>
+							<view class="item" v-for="(item,index) in months" :key="index">{{item}}月</view>
 						</picker-view-column>
-						<!-- <picker-view-column>
-							<view class="item" v-for="(item,index) in this.days" :key="index">{{item}}日</view>
-						</picker-view-column> -->
+						<picker-view-column>
+							<view class="item" v-for="(item,index) in days" :key="index">{{item}}日</view>
+						</picker-view-column>
 					</picker-view>
 				</view>
 			</view>
@@ -62,7 +62,6 @@
 		created: function() {
 			this.initData()
 		},
-		mounted: function() {},
 		methods: {
 			showModal: function(e) {
 				this.modalName = e.currentTarget.dataset.target
@@ -70,7 +69,7 @@
 			hideModal: function(e) {
 				this.modalName = null
 			},
-			bindChange: function(e) {
+			pickerChange: function(e) {
 				const val = e.detail.value
 				this.year = this.years[val[0]]
 				this.month = this.months[val[1]]
@@ -80,16 +79,16 @@
 				const date = new Date()
 				this.year = date.getFullYear()
 				this.month = date.getMonth() + 1
-				this.day = date.getDate()
+				this.day = date.getDay()
 				this.value = [9999, this.month - 1, this.day - 1]
 
-				for (let i = 1990; i <= date.getFullYear(); i++) {
+				for (let i = date.getFullYear(); i >= 1990 ; i--) {
 					this.years.push(i)
 				}
-				for (let i = 1; i <= 12; i++) {
+				for (let i = 12; i >= 1; i--) {
 					this.months.push(i)
 				}
-				for (let i = 1; i <= 31; i++) {
+				for (let i = 31; i >= 1; i--) {
 					this.days.push(i)
 				}
 			}
@@ -99,12 +98,12 @@
 
 <style scoped>
 	.more-date {
-		font-size: 1rpx;
-		color: #9dd9b8;
+		font-size: 20rpx;
+		color: #000000;
 	}
 
 	.bill-type-modal-body {
-		height: 550rpx;
+		height: 400rpx;
 		color: #000000;
 	}
 </style>

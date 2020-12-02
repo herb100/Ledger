@@ -6,6 +6,7 @@
 
 #### 开发说明
 Alt+Shift+F 默认格式化快捷键
+添加账单模式：ticket 组件中在 beforeMount 启动 initAddBill 方法
 
 #### 开发问题集合
 1. scroll-view 穿透问题。
