@@ -88,16 +88,19 @@
 			}
 		},
 		methods: {
+			// keppadValue: ['num', 'operator', 'num'.....]
 			changeValue: function(value) {
 				switch (value) {
 					case '确定':
 						let {res, isRight} = this.calString(value)
+						this.keypadValue = []
 
 						if (isRight) {
-							this.$emit('createBill')
+							this.$emit('createBill', res)
 						}
 						break;
 					case '取消':
+						this.keypadValue = []
 						this.$emit('cancleBill')
 						break;
 				}
@@ -158,35 +161,91 @@
 				}
 				this.$emit('changeValue', this.keypadValue.join(''))
 			},
+			// 中缀表达式求值
 			calString: function(value) {
-				// 中缀表达式求值
-				let isRight = false
+				let isRight = true
+				let numArr = []
+				let operArr = []
 				
 				for (let value of this.keypadValue) {
-					console.log(value)
+					if (!isNaN(value)) {
+						numArr.push(Number(value))
+						continue
+					}
+					// 操作符栈为空则入栈，否则对比栈顶操作符和当前操作符
+					if (operArr.length === 0) {
+						operArr.push(value)
+					} else {
+						let pri1 = this.getPriority(operArr[operArr.length-1])
+						let pri2 = this.getPriority(value)
+						if (pri1 >= pri2) {
+							let num2 = numArr.pop()
+							let num1 = numArr.pop()
+							let res = this.calFormula(num1, num2, operArr.pop())
+							numArr.push(res)
+						}
+						operArr.push(value)
+					}
 				}
-
+				
+				// 如果操作符栈不为空，则继续运行
+				while(operArr.length > 0) {
+					let num2 = numArr.pop()
+					let num1 = numArr.pop()
+					let res = this.calFormula(num1, num2, operArr.pop())
+					numArr.push(res)
+				}
+				
+				let res = numArr.pop()
+				
 				return {
-					res: 1,
+					res: res.toFixed(2),
 					isRight: isRight
 				}
 			},
+			getPriority: function(value) {
+				if (value == '+' || value == '-') {
+					return 2
+				} else if (value == '*' || value == '/') {
+					return 3
+				} else {
+					return 4
+				}
+			},
+			calFormula: function(num1, num2, operator) {
+				switch(operator) {
+					case '+':
+						return num1 + num2
+					case '-':
+						return num1 - num2
+					case '*':
+						return num1 * num2
+					case '/':
+						return num1 / num2
+				}
+			},
 			checkType: function(value) {
-				const operators = ['+', '-', '*', '/']
-
-				if (value === '.') {
-					return 'dots'
+				// const operators = ['+', '-', '*', '/']
+				let type = ''
+				
+				switch(value) {
+					case '.':
+						type = 'dots'
+						break
+					case 'delete':
+						type = 'delete'
+						break
+					case '+':
+						type = 'operator'
+						break
+					case '-':
+						type = 'operator'
+						break
+					default:
+						type = !isNaN(value) ? 'number' : ''
 				}
-				if (value === 'delete') {
-					return 'delete'
-				}
-				if (!isNaN(value)) {
-					return 'number'
-				}
-				if (operators.indexOf(value) !== -1) {
-					return 'operator'
-				}
-				return ''
+				
+				return type
 			}
 		}
 	}
