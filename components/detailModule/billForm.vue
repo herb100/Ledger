@@ -36,7 +36,7 @@
 		<!-- 时间选择 账单统计 -->
 		<view class="text-white bill-total">
 			<view style="display: inline-block;">
-				<date-time-picker></date-time-picker>
+				时间日期
 			</view>
 			<span class="bill-spending">
 				总支出 <text class="text-price">546</text>
@@ -50,12 +50,8 @@
 
 <script>
 	import billTypes from '@/common/billTypes.js'
-	import dateTimePicker from '@/components/basic/dateTimePicker.vue'
 
 	export default {
-		components: {
-			dateTimePicker
-		},
 		data() {
 			return {
 				modalName: '',
