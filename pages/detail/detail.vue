@@ -11,7 +11,7 @@
 		<view style="padding: 0rpx 10rpx;">
 			<ticket ref="ticket" @launchAddBill="hiddenModules">
 				<template v-slot:billForm>
-					<add-bill-form :billValue="newBillValue"></add-bill-form>
+					<add-bill-form ref="billForm" :billValue="newBillValue"></add-bill-form>
 				</template>
 				<template v-slot:billDetail>
 					<bill-list-simple></bill-list-simple>
@@ -62,6 +62,7 @@
 				this.newBillValue = value
 			},
 			createBill: function(billValue) {
+				console.log(this.$refs.billForm.getForm())
 				console.log('createBill ', billValue)
 				this.showModules()
 			},

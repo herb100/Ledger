@@ -110,7 +110,11 @@
 		methods: {
 			getForm: function() {
 				return {
-
+					billType: this.billTypeSelected,
+					date: this.date,
+					time: this.time,
+					note: this.noteValue,
+					useType: this.iconSelected
 				}
 			},
 			iconChange: function(key) {
