@@ -32,7 +32,7 @@
 			// launchAddBillHeight 用于判断滑动是否达到指定距离
 			launchAddBillHeight: {
 				type: Number,
-				default: 100
+				default: 200
 			},
 			testMode: {
 				type: Boolean,
@@ -75,7 +75,7 @@
 			},
 			ticketTouchMove: function(e) {
 				if (!this.launchTouch) return
-
+				
 				// 向上滑动时不出现
 				if (this.touchStartPageY > e.touches[0].pageY) return
 				this.touchMovePageY = e.touches[0].pageY
@@ -83,7 +83,7 @@
 
 				// 滑动是否达到指定距离
 				if (this.slideDistance <= this.launchAddBillHeight) {
-					this.ticketContentHeight = this.touchStartPageY + this.slideDistance
+					this.ticketContentHeight = this.slideDistance
 				}
 			},
 			ticketTouchEnd: function(e) {
@@ -109,6 +109,7 @@
 				this.billFormHeight = 0
 				this.billDetailHeight = 'auto'
 				this.launchTouch = true
+				this.slideDistance = 0
 			},
 			initTouch: function() {
 				if (this.testMode) {
