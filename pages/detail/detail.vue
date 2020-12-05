@@ -115,6 +115,10 @@
 	.content {
 		width: 100%;
 		position: absolute;
+		/* background-color: #3EB575; */
+		/* background-image: url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1607158398176&di=23248863c87b41d0473551140b3975e1&imgtype=0&src=http%3A%2F%2Fbos.pgzs.com%2Frbpiczy%2FWallpaper%2F2013%2F2%2F3%2F897cadfc9409480db13ab11f6f61be21-4.jpg'); */
+		/* background-size: 100%; */
+		height: 100%;
 	}
 	
 	.bill-info{

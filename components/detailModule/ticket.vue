@@ -169,65 +169,164 @@
 		position: relative;
 		background-color: #FFFFFF;
 	}
-
-	.sawtooth::before {
-		display: block;
-		content: "";
-		position: absolute;
-		top: -300%;
-		bottom: 0;
-		left: 0;
-		right: 0;
-		height: 10px;
-		margin-top: 20px;
-		background-size: 10px 20px;
-		box-shadow: 0 0 0 0 #007AFF;
-		background-image: linear-gradient(-45deg, transparent 70%, #FFFFFF 50%), linear-gradient(45deg, transparent 70%, #FFFFFF 50%);
-	}
-
+	
 	.sawtooth-shadow {
 		width: calc(100% - 20rpx);
-		height: 10rpx;
+		height: 5rpx;
+		opacity: 0.5;
 		margin-left: 10rpx;
 		position: relative;
 		background-color: #FFFFFF;
 	}
-
-	.sawtooth-shadow::after {
-		display: block;
-		content: "";
-		position: absolute;
-		top: -550%;
-		bottom: 0;
-		left: 50%;
-		right: 0;
-		height: 10px;
-		margin-top: 20px;
-		background-size: 10px 20px;
-		box-shadow: 0 0 0 0 #007AFF;
-		background-image: linear-gradient(-45deg, transparent 70%, #a5a5a5 50%), linear-gradient(45deg, transparent 70%, #a5a5a5 50%);
-		transform: translate(0%, 90%) rotate(2deg);
-		transform-origin: center center;
-		opacity: 0.8;
-		z-index: -1
+	
+	@media (max-width: 760px) {
+		.sawtooth::before {
+			display: block;
+			content: "";
+			position: absolute;
+			top: 10rpx;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			height: 25rpx;
+			background-size: 10px 20px;
+			box-shadow: 0 0 0 0 #007AFF;
+			background-image: linear-gradient(-45deg, transparent 71%, #FFFFFF 50%), linear-gradient(45deg, transparent 70%, #FFFFFF 50%);
+			z-index:1;
+		}
+		.sawtooth-shadow::after {
+			display: block;
+			content: "";
+			position: absolute;
+			top: -10rpx;
+			bottom: 0;
+			left: 46%;
+			right: 0;
+			height: 10px;
+			background-size: 10px 20px;
+			box-shadow: 0 0 0 0 #007AFF;
+			background-image: linear-gradient(-45deg, transparent 70%, black 50%), linear-gradient(45deg, transparent 70%, black 50%);
+			transform: translate(0%, 90%);
+			transform-origin: center center;
+			opacity: 0.8;
+			z-index: -1;
+		}
+		.sawtooth-shadow::before {
+			display: block;
+			content: "";
+			position: absolute;
+			top: -10rpx;
+			bottom: 0;
+			left: 0%;
+			right: 50%;
+			height: 10px;
+			background-size: 10px 20px;
+			box-shadow: 0 0 0 0 #007AFF;
+			background-image: linear-gradient(-45deg, transparent 70%, black 50%), linear-gradient(45deg, transparent 70%, black 50%);
+			transform: translate(0%, 90%);
+			transform-origin: center center;
+			opacity: 0.8;
+			z-index: -1;
+		}
 	}
-
-	.sawtooth-shadow::before {
-		display: block;
-		content: "";
-		position: absolute;
-		top: -550%;
-		bottom: 0;
-		left: 0%;
-		right: 50%;
-		height: 10px;
-		margin-top: 20px;
-		background-size: 10px 20px;
-		box-shadow: 0 0 0 0 #007AFF;
-		background-image: linear-gradient(-45deg, transparent 70%, #a5a5a5 50%), linear-gradient(45deg, transparent 70%, #a5a5a5 50%);
-		transform: translate(0%, 90%) rotate(-2deg);
-		transform-origin: center center;
-		opacity: 0.8;
-		z-index: -1
+	@media (min-width: 760px) and (max-width: 960px) {
+		.sawtooth::before {
+			display: block;
+			content: "";
+			position: absolute;
+			top: 10rpx;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			height: 18rpx;
+			background-size: 10px 20px;
+			box-shadow: 0 0 0 0 #007AFF;
+			background-image: linear-gradient(-45deg, transparent 71%, #FFFFFF 50%), linear-gradient(45deg, transparent 70%, #FFFFFF 50%);
+			z-index:1;
+		}
+		.sawtooth-shadow::after {
+			display: block;
+			content: "";
+			position: absolute;
+			top: -5rpx;
+			bottom: 0;
+			left: 45%;
+			right: 0;
+			height: 10px;
+			background-size: 10px 20px;
+			box-shadow: 0 0 0 0 #007AFF;
+			background-image: linear-gradient(-45deg, transparent 70%, black 50%), linear-gradient(45deg, transparent 70%, black 50%);
+			transform: translate(0%, 90%);
+			transform-origin: center center;
+			opacity: 0.8;
+			z-index: -1;
+		}
+		.sawtooth-shadow::before {
+			display: block;
+			content: "";
+			position: absolute;
+			top: -5rpx;
+			bottom: 0;
+			left: 0%;
+			right: 50%;
+			height: 10px;
+			background-size: 10px 20px;
+			box-shadow: 0 0 0 0 #007AFF;
+			background-image: linear-gradient(-45deg, transparent 70%, black 50%), linear-gradient(45deg, transparent 70%, black 50%);
+			transform: translate(0%, 90%);
+			transform-origin: center center;
+			opacity: 0.8;
+			z-index: -1;
+		}
+	}
+	@media (min-width: 960px) and (max-width: 1200px) {
+		.sawtooth::before {
+			display: block;
+			content: "";
+			position: absolute;
+			top: 10rpx;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			height: 15rpx;
+			background-size: 10px 20px;
+			box-shadow: 0 0 0 0 #007AFF;
+			background-image: linear-gradient(-45deg, transparent 71%, #FFFFFF 50%), linear-gradient(45deg, transparent 70%, #FFFFFF 50%);
+			z-index:1;
+		}
+		.sawtooth-shadow::after {
+			display: block;
+			content: "";
+			position: absolute;
+			top: -4rpx;
+			bottom: 0;
+			left: 45%;
+			right: 0;
+			height: 10px;
+			background-size: 10px 20px;
+			box-shadow: 0 0 0 0 #007AFF;
+			background-image: linear-gradient(-45deg, transparent 71%, black 50%), linear-gradient(45deg, transparent 70%, black 50%);
+			transform: translate(0%, 90%);
+			transform-origin: center center;
+			opacity: 0.8;
+			z-index: -1;
+		}
+		.sawtooth-shadow::before {
+			display: block;
+			content: "";
+			position: absolute;
+			top: -4rpx;
+			bottom: 0;
+			left: 0%;
+			right: 50%;
+			height: 10px;
+			background-size: 10px 20px;
+			box-shadow: 0 0 0 0 #007AFF;
+			background-image: linear-gradient(-45deg, transparent 71%, black 50%), linear-gradient(45deg, transparent 70%, black 50%);
+			transform: translate(0%, 90%);
+			transform-origin: center center;
+			opacity: 0.8;
+			z-index: -1;
+		}
 	}
 </style>
