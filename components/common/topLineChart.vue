@@ -1,29 +1,22 @@
 <template>
-	<view class="qiun-columns">
-		<view class="qiun-charts">
-			<!--#ifdef MP-ALIPAY -->
-			<canvas canvas-id="canvasLineA" id="canvasLineA" class="charts" :width="cWidth*pixelRatio" :height="cHeight*pixelRatio"
-			 :style="{'width':cWidth+'px','height':cHeight+'px'}" disable-scroll=true @touchstart="touchLineA" @touchmove="moveLineA"
-			 @touchend="touchEndLineA"></canvas>
-			<!--#endif-->
-			<!--#ifndef MP-ALIPAY -->
-			<canvas canvas-id="canvasLineA" id="canvasLineA" class="charts" disable-scroll=true @touchstart="touchLineA"
-			 @touchmove="moveLineA" @touchend="touchEndLineA"></canvas>
-			<!--#endif-->
-		</view>
-		<!--#ifdef H5 -->
-		<!-- <button class="qiun-button" @tap="changeData()">更新图表</button> -->
-		<!--#endif-->
+	<view>
+		<swiper class="square-dot" :indicator-dots="false" :circular="false" :autoplay="false">
+			<swiper-item v-for="(item, index) in arr" :key="index">
+				<view class="charts">
+					<u-charts :canvas-id="item.id" :chartType="item.chartType" :cWidth="cWidth" :cHeight="cHeight" :opts="item.opts" :ref="item.id"/>
+				</view>
+			</swiper-item>
+		</swiper>
+		
 	</view>
 </template>
 
 <script>
-	import uCharts from '@/static/js/u-charts.js';
+	import uCharts from '@/components/basic/uuchart.vue';
+	
 	import {
 		isJSON
 	} from '@/common/checker.js';
-	var _self;
-	var canvaLineA = null;
 
 	export default {
 		props: {
@@ -32,160 +25,78 @@
 				default: '#00acef'
 			}
 		},
+		components: {
+			uCharts
+		},
 		data() {
 			return {
-				cWidth: '',
-				cHeight: '',
-				pixelRatio: 1,
-				textarea: ''
+				textarea: '',
+				cWidth:'',
+				cHeight:'',
+				arr: []
 			}
 		},
-		mounted() {
-			_self = this;
-			//#ifdef MP-ALIPAY
-			uni.getSystemInfo({
-				success: function(res) {
-					if (res.pixelRatio > 1) {
-						//正常这里给2就行，如果pixelRatio=3性能会降低一点
-						//_self.pixelRatio =res.pixelRatio;
-						_self.pixelRatio = 2;
-					}
-				}
-			});
-			//#endif
-			this.cWidth = uni.upx2px(800);
-			this.cHeight = uni.upx2px(220);
+		beforeMount() {
+			this.cWidth=uni.upx2px(850);
+			this.cHeight=uni.upx2px(220);
 			this.getServerData();
 		},
 		methods: {
 			getServerData() {
+				let _self = this
+				
 				uni.request({
 					url: 'https://www.ucharts.cn/data.json',
 					data: {},
 					success: function(res) {
-						console.log(res.data.data)
-						res = {
-							"data": {
-								"data": {
-									"LineA": {
-										"categories": ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
-										"series": [{
-											"name": "成交量C",
-											"data": [100, 80, 95, 150, 112, 132, 123]
-										}, ]
-									}
-								}
-							}
-						}
 						let LineA = {
-							categories: [],
-							series: []
+							categories: ['Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sat', 'Sun'],
+							series: [{
+								'name': '详细信息',
+								'data': [30, 28, 25, 29, 23, 27, 30]
+							}]
 						};
-						//这里我后台返回的是数组，所以用等于，如果您后台返回的是单条数据，需要push进去
-						LineA.categories = res.data.data.LineA.categories;
-						LineA.series = res.data.data.LineA.series;
+			
 						_self.textarea = JSON.stringify(res.data.data.LineA);
-						_self.showLineA("canvasLineA", LineA);
+			
+						let serverData = [{
+							opts: LineA,
+							chartType: "line",
+							id: "abcc"
+						}, {
+							opts: LineA,
+							chartType: "line",
+							id: "bcdd"
+						}];
+			
+						_self.arr = serverData;
 					},
 					fail: () => {
 						_self.tips = "网络错误，小程序端请检查合法域名";
 					},
 				});
 			},
-			showLineA(canvasId, chartData) {
-				canvaLineA = new uCharts({
-					$this: _self,
-					canvasId: canvasId,
-					type: 'line',
-					fontSize: 11,
-					padding: [15, 15, 0, 15],
-					legend: {
-						show: false,
-					},
-					colors: ['#FFFFFF'],
-					dataLabel: false,
-					dataPointShape: true,
-					dataPointShapeType: 'solid',
-					background: 'red',
-					pixelRatio: _self.pixelRatio,
-					categories: chartData.categories,
-					series: chartData.series,
-					animation: true,
-					enableScroll: false, //开启图表拖拽功能
-					xAxis: {
-						disableGrid: true,
-						type: 'grid',
-						gridType: 'dash',
-						scrollShow: false,
-						itemCount: 7,
-						scrollAlign: 'left',
-						fontColor: '#000000',
-						axisLine: false
-					},
-					yAxis: {
-						disabled: true,
-						disableGrid: true,
-						gridType: 'dash',
-						splitNumber: 8,
-						min: 10,
-						max: 180,
-						format: (val) => {
-							return val.toFixed(0) + '元'
-						} //如不写此方法，Y轴刻度默认保留两位小数
-					},
-					width: _self.cWidth * _self.pixelRatio,
-					height: _self.cHeight * _self.pixelRatio,
-					extra: {
-						line: {
-							type: 'straight'
-						}
-					},
-				});
-			},
-			touchLineA(e) {
-				canvaLineA.scrollStart(e);
-				let dataIndex = canvaLineA.getCurrentDataIndex(e);
-				console.log('click dataIndex: ' + dataIndex)
-			},
-			moveLineA(e) {
-				canvaLineA.scroll(e);
-			},
-			touchEndLineA(e) {
-				// canvaLineA.scrollEnd(e);
-			},
 			changeData() {
-				if (isJSON(_self.textarea)) {
-					let newdata = JSON.parse(_self.textarea);
-					canvaLineA.updateData({
-						series: newdata.series,
-						categories: newdata.categories,
-						scrollPosition: 'right',
-						animation: false
-					});
-				} else {
-					uni.showToast({
-						title: '数据格式错误',
-						image: '../../../static/images/alert-warning.png'
-					})
-				}
-			},
-
+				//这里newdata仅做为演示，实际请先获取后台数据，再调用子组件changeData事件
+				let newdata = JSON.parse(_self.textarea);
+				//'bcdd'为之前后台获取的第二个图表的id，不是固定不变的
+				// this.$refs.bcdd[0].changeData('bcdd',newdata)
+			}
 		}
 	}
 </script>
 
-<style scoped>
+<style>
 	/*样式的width和height一定要与定义的cWidth和cHeight相对应*/
 	.qiun-charts {
-		width: 800upx;
+		width: 850upx;
 		height: 220upx;
-		margin-left: -20upx;
-		/* background-color: #FFFFFF; */
+		background-color: #FFFFFF;
 	}
 
 	.charts {
-		width: 800upx;
+		width: 850upx;
 		height: 220upx;
-		/* background-color: #FFFFFF; */
+		margin-left: -50upx;
 	}
 </style>
