@@ -6,8 +6,8 @@
 
 <script>
 	import uCharts from '@/static/js/u-charts.js';
-	var canvases = {};
-	
+	// var canvases = {};
+
 	export default {
 		props: {
 			chartType: {
@@ -40,6 +40,11 @@
 		mounted() {
 			this.init();
 		},
+		data() {
+			return {
+				canvases: {}
+			}
+		},
 		methods: {
 			init: function() {
 				switch (this.chartType) {
@@ -54,7 +59,7 @@
 				}
 			},
 			initLineChart: function() {
-				canvases[this.canvasId] = new uCharts({
+				this.canvases[this.canvasId] = new uCharts({
 					$this: this,
 					canvasId: this.canvasId,
 					type: 'line',
@@ -88,7 +93,6 @@
 						dashLength: 8,
 						splitNumber: 5,
 						min: 10,
-						max: 180,
 						format: (val) => {
 							return val.toFixed(0) + '元'
 						}
@@ -103,11 +107,11 @@
 				});
 			},
 			// 这里仅作为示例传入两个参数，cid为canvas-id,newdata为更新的数据，需要更多参数请自行修改
-			changeData(cid,newdata) {
+			changeData: function(cid, newdata) {
 				canvases[cid].updateData({
 					series: newdata.series,
 					categories: newdata.categories
-				});
+				})
 			},
 			touchStart: function(e) {
 				// canvases[this.canvasId].showToolTip(e, {
@@ -116,6 +120,7 @@
 				// 	}
 				// });
 				// canvases[this.canvasId].scrollStart(e);
+				// this.$emit('curDataClick', .getCurrentDataIndex(e))
 			},
 			touchMove: function(e) {
 				// canvases[this.canvasId].scroll(e);

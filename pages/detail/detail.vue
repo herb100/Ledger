@@ -1,7 +1,7 @@
 <template>
 	<view class="content">
 		<view class="top-line-chart" :style="{height: tlcHeight==='auto'?'auto':tlcHeight+'rpx'}">
-			<top-line-chart></top-line-chart>
+			<top-line-chart :chartInfo="billInfo" @getCurClickIndex="getCurClickIndex" @getCurSwiperIndex="getCurSwiperIndex"></top-line-chart>
 		</view>
 		<view class="bill-info" :style="{height: biHeight==='auto'?'auto':biHeight+'rpx'}">
 			<text class="bill-integer-number">10.09</text>
@@ -51,13 +51,20 @@
 				kpHeight: 345,
 				kpStatus: false,
 				newBillValue: '',
-				newBillComment: ''
+				newBillComment: '',
+				billInfo: []
 			}
 		},
 		beforeMount: function() {
-			// this.get_bill(_self)
+			this.get_bill()
 		},
 		methods: {
+			getCurClickIndex: function(index) {
+				// console.log('click index ', index)
+			},
+			getCurSwiperIndex: function(index) {
+				// console.log('swiper index ', index)
+			},
 			changeNewBillValue: function(value) {
 				this.newBillValue = value
 			},
@@ -75,7 +82,36 @@
 			hideModal: function(e) {
 				this.modalName = null
 			},
-			get_bill: function(_self) {
+			get_bill: function() {
+				let LineA = {
+					categories: ['Mon', 'Tue', 'Wed', 'Thr', 'Fri', 'Sat', 'Sun'],
+					series: [{
+						'name': '详细信息',
+						'data': [300, 28, 25, 29, 23, 27, 30]
+					}]
+				};
+				
+				let serverData = [{
+					opts: LineA,
+					chartType: "line",
+					id: "abcc"
+				}, {
+					opts: LineA,
+					chartType: "line",
+					id: "bcdd"
+				}, {
+					opts: LineA,
+					chartType: "line",
+					id: "efgg"
+				}, {
+					opts: LineA,
+					chartType: "line",
+					id: "hijj"
+				}]
+				
+				this.billInfo = serverData
+				
+				return
 				uni.request({
 					url: config.baseUrl + '/bill',
 					header: {},
@@ -84,7 +120,9 @@
 					success: function(res) {
 						// _self.billInfo = res
 					},
-					fail: function(res) {}
+					fail: function(res) {
+						// _self.tips = "网络错误，小程序端请检查合法域名";
+					}
 				})
 			},
 			hiddenModules: function() {
@@ -114,14 +152,14 @@
 
 	.content {
 		width: 100%;
+		height: 100%;
 		position: absolute;
 		background-color: #3EB575;
 		/* background-image: url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1607158398176&di=23248863c87b41d0473551140b3975e1&imgtype=0&src=http%3A%2F%2Fbos.pgzs.com%2Frbpiczy%2FWallpaper%2F2013%2F2%2F3%2F897cadfc9409480db13ab11f6f61be21-4.jpg'); */
 		/* background-size: 100%; */
-		height: 100%;
 	}
-	
-	.bill-info{
+
+	.bill-info {
 		overflow: hidden;
 	}
 
@@ -129,17 +167,17 @@
 		width: 95%;
 		margin: 0 2.5%;
 	}
-	
+
 	.bill-integer-number {
 		font-size: 22px;
 	}
-	
+
 	.bill-decimal-number {
 		font-size: 18px;
 		padding-top: 2px;
 		color: #909090;
 	}
-	
+
 	.keypad-drawer {
 		width: 100%;
 		background-color: #f1f1f1;

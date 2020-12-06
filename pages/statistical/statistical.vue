@@ -1,7 +1,11 @@
 <template>
 	<view class="content">
-		<top-line-chart :tbHeight="tlcHeight"></top-line-chart>
-		<ring-chart></ring-chart>
+		<view class="top-line-chart" :style="{height: tlcHeight==='auto'?'auto':tlcHeight+'rpx'}">
+			<top-line-chart @getCurClickIndex="getCurClickIndex" @getCurSwiperIndex="getCurSwiperIndex"></top-line-chart>
+		</view>
+		<view>
+			<ring-chart></ring-chart>
+		</view>
 		<cost-list></cost-list>
 	</view>
 </template>
@@ -19,7 +23,7 @@
 		},
 		data() {
 			return {
-				tlcHeight: 115,
+				tlcHeight: 'auto',
 				title: 'this is statistical page'
 			}
 		},
@@ -27,7 +31,12 @@
 
 		},
 		methods: {
-
+			getCurClickIndex: function(index) {
+				console.log('click index ', index)
+			},
+			getCurSwiperIndex: function(index) {
+				console.log('swiper index ', index)
+			}
 		}
 	}
 </script>
@@ -40,5 +49,11 @@
 
 	.content {
 		width: 100%;
+		height: 100%;
+		background-color: #3EB575;
+	}
+	
+	.top-line-chart {
+		overflow: hidden;
 	}
 </style>
