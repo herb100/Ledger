@@ -15,10 +15,6 @@
 <script>
 	import uuCharts from '@/components/basic/uuchart.vue';
 
-	import {
-		isJSON
-	} from '@/common/checker.js';
-
 	export default {
 		props: {
 			bgColor: {
@@ -54,9 +50,6 @@
 		beforeMount: function() {
 			this.cWidth = uni.upx2px(850);
 			this.cHeight = uni.upx2px(200);
-		},
-		mounted:function(){
-			console.log()
 		},
 		methods: {
 			// 由于 uchart 嵌套在 swiper 中，导致 e 错乱从而 getCurrentDataIndex 无效

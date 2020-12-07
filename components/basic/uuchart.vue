@@ -48,8 +48,8 @@
 		methods: {
 			init: function() {
 				switch (this.chartType) {
-					case 'column':
-						this.initColumnChart();
+					case 'ring':
+						this.initRingChart();
 						break;
 					case 'line':
 						this.initLineChart();
@@ -57,6 +57,44 @@
 					default:
 						break;
 				}
+			},
+			initRingChart: function() {
+				console.log('initRingChart ', this.canvasId, this.opts)
+				console.log('width height ', this.cWidth, this.cHeight)
+				this.canvases[this.canvasId] = new uCharts({
+					$this: this,
+					canvasId: this.canvasId,
+					type: 'ring',
+					fontSize: 11,
+					padding: [5, 5, 5, 5],
+					legend: {
+						show: false,
+					},
+					pixelRatio: this.pixelRatio,
+					series: this.opts.series,
+					animation: false,
+					width: this.cWidth * this.pixelRatio,
+					height: this.cHeight * this.pixelRatio,
+					disablePieStroke: true,
+					dataLabel: false,
+					subtitle: {
+						name: '70%',
+						color: '#7cb5ec',
+						fontSize: 15 * this.pixelRatio,
+					},
+					title: {
+						name: '收益率',
+						color: '#666666',
+						fontSize: 13 * this.pixelRatio,
+					},
+					extra: {
+						pie: {
+							offsetAngle: 0,
+							ringWidth: 30 * this.pixelRatio,
+							labelWidth: 15
+						}
+					},
+				});
 			},
 			initLineChart: function() {
 				this.canvases[this.canvasId] = new uCharts({
