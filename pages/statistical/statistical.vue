@@ -27,9 +27,6 @@
 				title: 'this is statistical page'
 			}
 		},
-		onLoad() {
-
-		},
 		methods: {
 			getCurClickIndex: function(index) {
 				console.log('click index ', index)
@@ -44,12 +41,13 @@
 <style scoped>
 	page {
 		background-color: #ededed;
-		font-family: 微软雅黑;
+		font-family: 微软雅黑; 
 	}
 
 	.content {
 		width: 100%;
 		height: 100%;
+		position: absolute;
 		background-color: #3EB575;
 	}
 	

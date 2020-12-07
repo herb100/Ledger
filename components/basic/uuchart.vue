@@ -59,8 +59,6 @@
 				}
 			},
 			initRingChart: function() {
-				console.log('initRingChart ', this.canvasId, this.opts)
-				console.log('width height ', this.cWidth, this.cHeight)
 				this.canvases[this.canvasId] = new uCharts({
 					$this: this,
 					canvasId: this.canvasId,

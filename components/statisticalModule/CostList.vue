@@ -1,60 +1,60 @@
 <template>
 	<view class="cost-list">
 		<view class="total-cost">
-			<text class="title">Cost</text>
+			<text class="title">{{billType}}</text>
 			<view :style="{display: 'inline-block'}">
-				<text class="integer-number">5811</text>
-				<text class="decimal-number">.70</text>
+				<text class="integer-number">{{this.billTotal.toFixed(2).toString().split('.')[0]}}</text>
+				<text class="decimal-number">.{{this.billTotal.toFixed(2).toString().split('.')[1]}}</text>
 			</view>
 		</view>
 		<view class="split-line"></view>
-		<view class="cost-item">
-			<view class="cost-item-left">
-				<view class="dots" :style="{backgroundColor: '#e478c3'}"></view>
-				<i class="iconfont icon-canyin"></i>
-				<text class="name">Computer</text>
+		<view v-for="(item, key) in billInfo" :key="key">
+			<view class="cost-item" @click="showDetail(item['type'])">
+				<view class="cost-item-left">
+					<view class="dots" :style="{backgroundColor: colors[key%colors.length]}"></view>
+					<i class="iconfont icon-canyin" style="display: inline-block;"></i>
+					<text class="name">{{item['type']}}</text>
+				</view>
+				<view class="cost-item-center"><text>{{item['percentage']}}</text></view>
+				<view class="cost-item-right">
+					<text class="integer-number">{{item['value'].toString().split('.')[0]}}</text>
+					<text class="decimal-number">.{{item['value'].toString().split('.')[1]}}</text>
+				</view>
 			</view>
-			<view class="cost-item-center"><text>1</text></view>
-			<view class="cost-item-right">
-				<text class="integer-number">4,700</text>
-				<text class="decimal-number">.00</text>
-			</view>
+			<view class="split-line"></view>
 		</view>
-		<view class="split-line"></view>
-		<view class="cost-item">
-			<view class="cost-item-left">
-				<view class="dots" :style="{backgroundColor: '#e478c3'}"></view>
-				<i class="iconfont icon-canyin"></i>
-				<text class="name">Computerefefef</text>
-			</view>
-			<view class="cost-item-center"><text>1</text></view>
-			<view class="cost-item-right">
-				<text class="integer-number">4,700000000000000000,00</text>
-				<text class="decimal-number">.00</text>
-			</view>
-		</view>
-		<view class="split-line"></view>
-		<view class="cost-item">
-			<view class="cost-item-left">
-				<view class="dots" :style="{backgroundColor: '#e478c3'}"></view>
-				<i class="iconfont icon-canyin"></i>
-				<text class="name">puter</text>
-			</view>
-			<view class="cost-item-center"><text>1</text></view>
-			<view class="cost-item-right">
-				<text class="integer-number">4,700</text>
-				<text class="decimal-number">.00</text>
-			</view>
-		</view>
-		<view class="split-line"></view>
 	</view>
 </template>
 
 <script>
 	export default {
+		props: {
+			billType: {
+				type: String,
+				default: 'Cost'
+			},
+			billTotal: {
+				type: Number,
+				default: 0.01
+			},
+			billInfo: {
+				type: Array, 
+				default: [{
+					type: 'Computer',
+					icon: 'computer',
+					percentage: 1,
+					value: '4,700.00'
+				}]
+			}
+		},
 		data() {
 			return {
-
+				colors: ['#e478c3', 'green', 'red', 'black']
+			}
+		},
+		methods: {
+			showDetail: function(type) {
+				console.log(type)
 			}
 		}
 	}
@@ -95,6 +95,7 @@
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
+		flex-wrap: nowrap;
 		width: 100%;
 		padding: 14rpx 0rpx;
 	}
