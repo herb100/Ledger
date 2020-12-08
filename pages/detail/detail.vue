@@ -5,10 +5,12 @@
 		</view>
 		<view class="bill-info" :style="{height: biHeight==='auto'?'auto':biHeight+'rpx'}">
 			<text class="bill-integer-number">10.09</text>
-			<text class="bill-integer-number"><text class="text-price">361</text></text>
-			<text class="bill-decimal-number">.00</text>
+			<view>
+				<text class="bill-integer-number"><text class="text-price">361</text></text>
+				<text class="bill-decimal-number">.00</text>
+			</view>
 		</view>
-		<view style="padding: 0rpx 10rpx;">
+		<view>
 			<ticket ref="ticket" @launchAddBill="hiddenModules">
 				<template v-slot:billForm>
 					<add-bill-form ref="billForm" :billValue="newBillValue"></add-bill-form>
@@ -18,6 +20,7 @@
 				</template>
 			</ticket>
 		</view>
+		<process-bar></process-bar>
 		<view class="keypad-drawer" v-if="kpStatus" :style="{height: kpHeight+'rpx'}">
 			<keypad @changeValue="changeNewBillValue" @cancleBill="cancleBill" @createBill="createBill"></keypad>
 		</view>
@@ -32,6 +35,7 @@
 	import ticket from '@/components/detailModule/ticket.vue'
 	import config from '@/config.js'
 	import keypad from '@/components/basic/keypad.vue'
+	import processBar from '@/components/progressBar.vue'
 
 	export default {
 		components: {
@@ -40,7 +44,8 @@
 			billListSimple,
 			ticket,
 			addBillForm,
-			keypad
+			keypad,
+			processBar
 		},
 		data() {
 			return {
@@ -155,12 +160,16 @@
 		height: 100%;
 		position: absolute;
 		background-color: #3EB575;
+		padding: 0px 2%;
 		/* background-image: url('https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1607158398176&di=23248863c87b41d0473551140b3975e1&imgtype=0&src=http%3A%2F%2Fbos.pgzs.com%2Frbpiczy%2FWallpaper%2F2013%2F2%2F3%2F897cadfc9409480db13ab11f6f61be21-4.jpg'); */
 		/* background-size: 100%; */
 	}
 
 	.bill-info {
 		overflow: hidden;
+		display: flex;
+		justify-content: space-between;
+		margin: 4px 0px;
 	}
 
 	.bill-list {
