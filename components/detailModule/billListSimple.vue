@@ -1,5 +1,5 @@
 <template>
-	<view @click="cancleDelete">
+	<view @click="closeDelete">
 		<view v-for="(item, key) in billInfo" :key="key">
 			<view class="bill-item move-item" @longpress="itemLongPress" :data-index="key">
 				<view v-if="modalName==='delete-button-group-'+key?true:false" :class="'delete-button-group-'+key" class="delete-button-group">
@@ -50,9 +50,9 @@
 			deleteItem: function(e) {
 				console.log(this.deleteIndex)
 				this.$emit('deleteBillInfo', this.deleteIndex)
-				this.cancleDelete()
+				this.closeDelete()
 			},
-			cancleDelete: function(e) {
+			closeDelete: function(e) {
 				this.modalName = null
 				this.deleteIndex = null
 			}
