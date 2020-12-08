@@ -12,7 +12,7 @@
 			<view class="cost-item" @click="showDetail(item['type'])">
 				<view class="cost-item-left">
 					<view class="dots" :style="{backgroundColor: colors[key%colors.length]}"></view>
-					<i class="iconfont icon-canyin" style="display: inline-block;"></i>
+					<i class="iconfont" :class="'icon-'+item['icon']" style="display: inline-block;"></i>
 					<text class="name">{{item['type']}}</text>
 				</view>
 				<view class="cost-item-center"><text>{{item['percentage']}}</text></view>
@@ -41,7 +41,8 @@
 				type: Array, 
 				default: [{
 					type: 'Computer',
-					icon: 'computer',
+					key: 'restaurant',
+					icon: 'canyin',
 					percentage: 1,
 					value: '4,700.00'
 				}]
